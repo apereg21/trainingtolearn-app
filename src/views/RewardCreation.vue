@@ -1,10 +1,10 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
-    <v-card class="justify-center mx-auto my-5" width="800" height="525">
+    <v-card class="justify-center mx-auto my-5" width="800" height="625">
       <v-toolbar dark color="blue">
         <v-toolbar-title class="text-h6 white--text pl-0">
-          Reward Form
+          Course Form
         </v-toolbar-title>
       </v-toolbar>
       <v-form ref="form" v-model="valid" lazy-validation>
@@ -13,7 +13,7 @@
             <v-text-field
               v-model="name"
               :rules="bodyRules"
-              label="Name Reward"
+              label="Name Course"
               required
               align-center
             ></v-text-field>
@@ -22,7 +22,7 @@
             <v-text-field
               v-model="descriptionUR"
               :rules="bodyRules"
-              label="Description Reward"
+              label="Description Course"
               required
             ></v-text-field>
           </v-row>
@@ -30,7 +30,7 @@
             <v-text-field
               v-model="imageUR"
               :rules="bodyRules"
-              label="Image URL"
+              label="Image (Optional)"
               required
             ></v-text-field>
           </v-row>
@@ -38,8 +38,7 @@
             <v-text-field
               v-model="costReward"
               type="number"
-              :rules="bodyRules"
-              label="Cost of Reward"
+              label="Unipoints to complete Course"
               required
             ></v-text-field>
           </v-row>
@@ -50,7 +49,7 @@
                 v-model="username"
                 :items="users"
                 :rules="[(v) => !!v || 'User is required']"
-                label="User From"
+                label="User Instructor"
                 required
               ></v-select>
             </v-col>
@@ -58,12 +57,22 @@
               <v-text-field
                 :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show ? 'text' : 'password'"
-                label="Password User"
+                label="User's Password"
                 v-model="password"
                 class="input-group--focused"
                 @click:append="show = !show"
               ></v-text-field>
             </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-select
+                class="mr-3"
+                v-model="userCourse"
+                :items="users"
+                :rules="[(v) => !!v || 'User is required']"
+                label="User in Course"
+                required
+              ></v-select>
           </v-row>
           <v-row>
             <v-col align="center" justify="center">
@@ -73,7 +82,7 @@
                 class="mr-3"
                 v-on:click="createReward()"
               >
-                Create Reward
+                Create Course
               </v-btn>
 
               <v-btn color="warning" class="mr-0" @click="reset">
@@ -100,6 +109,7 @@ export default {
     password:"",
     show:false,
     costReward: 0,
+    userCourse:"",
     bodyRules: [
       (v) => !!v || "Data field is required",
       (v) => (v && v.length >= 3) || "Name must be less than 3 characters",
