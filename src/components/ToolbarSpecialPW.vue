@@ -4,7 +4,7 @@
     height="60px"
   >
   <v-toolbar color="blue">
-    <v-btn class="ma-2" color="red" justify="end" dark v-on:click="goToMenu() ">
+    <v-btn class="ma-2" color="red" justify="end" dark v-on:click="goToMyProfile() ">
       Cancel
       <v-icon dark right> mdi-close-circle </v-icon>
     </v-btn>
@@ -16,9 +16,9 @@
 export default {
   data: () => ({}),
   methods: {
-    goToMenu: function () {
+    goToMyProfile: function () {
       this.$router.push({
-        name: "Home",
+        name: "MyProfile",
       });
       
     },

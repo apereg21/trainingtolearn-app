@@ -1,25 +1,28 @@
 <template>
-<v-card
-    color="white"
-    height="60px"
-  >
-  <v-toolbar color="blue">
-    <v-btn class="ma-2" color="primary" dark v-on:click="clickNA()">
-      New Account
-      <v-icon dark right> mdi-account-plus </v-icon>
-    </v-btn>
+  <v-card color="white" height="60px">
+    <v-toolbar color="blue">
+      <v-btn class="ma-2" color="primary" dark v-on:click="clickNA()">
+        New Account
+        <v-icon dark right> mdi-account-plus </v-icon>
+      </v-btn>
 
-    <v-btn class="ma-2" color="red" dark v-on:click="clickNT()">
-      New Payment/Adquisition
-      <v-icon dark right> mdi-currency-usd </v-icon>
-    </v-btn>
+      <v-btn class="ma-2" color="red" dark v-on:click="clickNT()">
+        New Payment/Adquisition
+        <v-icon dark right> mdi-currency-usd </v-icon>
+      </v-btn>
 
-    <v-btn class="ma-2" color="black" dark v-on:click="clickNR()">
-      New Course
-      <v-icon dark right> mdi-medal </v-icon>
-    </v-btn>
-  </v-toolbar>
-</v-card>
+      <v-btn class="ma-2" color="black" dark v-on:click="clickNR()">
+        New Course
+        <v-icon dark right> mdi-medal </v-icon>
+      </v-btn>
+      <v-spacer />
+      <v-avatar>
+        <v-icon class="ma-2" color="black" dark v-on:click="clickMP()">
+          mdi-account-circle
+        </v-icon>
+      </v-avatar>
+    </v-toolbar>
+  </v-card>
 </template>
 
 <script>
@@ -30,10 +33,9 @@ export default {
       this.$router.push({
         name: "UserCreation",
       });
-      
     },
     clickNT: function () {
-       this.$router.push({
+      this.$router.push({
         name: "TransactionCreation",
       });
     },
@@ -41,7 +43,12 @@ export default {
       this.$router.push({
         name: "RewardCreation",
       });
-    }
+    },
+    clickMP: function () {
+      this.$router.push({
+        name: "MyProfile",
+      });
+    },
   },
 };
 </script>
