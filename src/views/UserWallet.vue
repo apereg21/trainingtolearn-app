@@ -1,7 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecialPW />
-    <v-card class="justify-center mx-auto my-5" width="800" height="625">
+    <v-card class="justify-center mx-auto my-5" width="1000" height="800">
       <v-toolbar dark color="blue">
         <v-toolbar-title class="text-h6 white--text pl-0">
           My Profile
@@ -21,20 +21,24 @@
         <v-btn v-on:click="getUserID()">Hey</v-btn>
       </v-container>
       <v-container fluid>
-        <v-data-table
-          :headers="headers"
-          :items="unirewards"
-          :items-per-page="5"
-          class="elevation-1"
-        ></v-data-table>
-      </v-container>
-      <v-container fluid>
-        <v-data-table
-          :headers="headers"
-          :items="transactions"
-          :items-per-page="5"
-          class="elevation-1"
-        ></v-data-table>
+        <v-row>
+          <v-col>
+            <v-data-table
+              :headers="headers"
+              :items="unirewards"
+              :items-per-page="5"
+              class="elevation-1"
+            ></v-data-table>
+          </v-col>
+          <v-col>
+            <v-data-table
+              :headers="headers2"
+              :items="transactions"
+              :items-per-page="5"
+              class="elevation-1"
+            ></v-data-table>
+          </v-col>
+        </v-row>
       </v-container>
     </v-card>
   </v-app>
@@ -48,9 +52,9 @@ export default {
   data: () => ({
     unirewards: [],
     transactions: [],
-    headers: [
-      { text: "Money", value: "money" },
-    ],
+    walletData: [],
+    headers: [{ text: "Name", value: "nameUR"} ,{ text: "Desc", value: "descriptionUR"},{ text: "Cost", value: "cost"} ,],
+    headers2: [{ text: "Money", value: "money" }],
   }),
   props: {},
   components: {
@@ -58,7 +62,7 @@ export default {
   },
   computed: {},
 
-   methods: {
+  methods: {
     getUserWalletData(id) {
       const headers = {
         "Content-Type": "application/json",
@@ -68,9 +72,9 @@ export default {
         .get("http://localhost:3000/getSpecificWallet/:" + id, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
-          this.money = response.data.fullSurname;
-          this.ids = response.data.username;
-          this.typeuser = response.data.typeUser;
+          this.walletData = response.data;
+          this.unirewards = response.data[1];
+          alert(response.data);
         })
         .catch((error) => {
           console.log(error);
