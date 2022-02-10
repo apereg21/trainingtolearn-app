@@ -54,7 +54,7 @@ export default {
     transactions: [],
     walletData: [],
     headers: [{ text: "Name", value: "nameUR"} ,{ text: "Desc", value: "descriptionUR"},{ text: "Cost", value: "cost"} ,],
-    headers2: [{ text: "Money", value: "money" }],
+    headers2: [{ text: "Type", value: "typeTransaction" },{ text: "Money", value: "money" },{ text: "UniRewardId", value: "UniRewardId" },{ text: "From Address", value: "fromAddress" },{ text: "To Address", value: "toAddress" }],
   }),
   props: {},
   components: {
@@ -74,7 +74,8 @@ export default {
           console.log("Server response: " + response.data);
           this.walletData = response.data;
           this.unirewards = response.data[1];
-          alert(response.data);
+          this.transactions = response.data[2];
+          alert(this.transactions);
         })
         .catch((error) => {
           console.log(error);

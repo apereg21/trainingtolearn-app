@@ -4,7 +4,7 @@
     <v-card class="justify-center mx-auto my-5" width="1200" height="550">
       <v-toolbar dark color="blue">
         <v-toolbar-title class="text-h6 white--text pl-0">
-          Transaction Form
+          Reward Form
         </v-toolbar-title>
       </v-toolbar>
       <v-form ref="form" v-model="valid" lazy-validation>
@@ -32,12 +32,12 @@
               <v-container fluid>
                 <v-switch
                   v-model="switch1"
-                  label="Money Transfer"
+                  label="Delivery UniPoints"
                   @click="proveSwitch"
                 ></v-switch>
                 <v-switch
                   v-model="switch2"
-                  label="UniReward Transfer"
+                  label="UniReward Adquisition"
                   @click="proveSwitch2"
                 ></v-switch>
               </v-container>
@@ -45,8 +45,8 @@
             <v-col>
               <v-text-field
                 v-model="money"
-                :rules="[(v) => !!v || 'Money is required']"
-                label="Amount of money"
+                :rules="[(v) => !!v || 'UniPoints Field is required']"
+                label="UniPoints cost"
                 :disabled="!visibility1"
                 
                 align-left
@@ -54,7 +54,7 @@
               <v-select
                 v-model="uniR"
                 :items="unirewards"
-                :rules="[(v) => !!v || 'Rewards is required']"
+                :rules="[(v) => !!v || 'UniReward is required']"
                 label="UniReward Wanted"
                 :disabled="!visibility2"
                 align-left

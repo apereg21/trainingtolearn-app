@@ -7,7 +7,7 @@
       </v-btn>
 
       <v-btn class="ma-2" color="red" dark v-on:click="clickNT()">
-        New Payment/Adquisition
+        New Reward
         <v-icon dark right> mdi-currency-usd </v-icon>
       </v-btn>
 
