@@ -74,23 +74,22 @@
         <v-text-field
           v-model="nameN"
           label="New Name"
-          readonly>
+          >
         </v-text-field>
         <v-text-field
           v-model="fullsurnameN"
           label="New Full Surname"
-          readonly>
+          >
         </v-text-field>
         <v-text-field
           v-model="usnameN"
-          label="New Username"
-          readonly>
+          label="New UserName"
+          >
         </v-text-field>
-        
         <v-text-field
-            v-model="uspassN"
-            label="New Password"
-            readonly>
+          v-model="uspassN"
+          label="New Password"
+          >
         </v-text-field>
         <v-row no-gutters>
           <v-col align="center" justify="center">
@@ -115,6 +114,7 @@ export default {
 
     username: "",
     password: "",
+    prueba: "",
 
     name: "",
     uspass: "",
