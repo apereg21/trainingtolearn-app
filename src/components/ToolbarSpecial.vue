@@ -3,10 +3,10 @@
     color="white"
     height="60px"
   >
-  <v-toolbar color="blue">
-    <v-btn class="ma-2" color="red" justify="end" dark v-on:click="goToMenu() ">
-      Cancel
-      <v-icon dark right> mdi-close-circle </v-icon>
+  <v-toolbar color="#DAF7A6">
+    <v-btn class="ma-2" color="#A4BB7A" justify="end" v-on:click="goToMenu()">
+      <v-icon> mdi-arrow-left </v-icon>
+      Go Back
     </v-btn>
   </v-toolbar>
 </v-card>

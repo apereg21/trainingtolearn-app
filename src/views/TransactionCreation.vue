@@ -2,8 +2,8 @@
   <v-app id="keep" class="white">
     <ToolbarSpecial />
     <v-card class="justify-center mx-auto my-5" width="1200" height="550">
-      <v-toolbar dark color="blue">
-        <v-toolbar-title class="text-h6 white--text pl-0">
+      <v-toolbar color="#DAF7A6">
+        <v-toolbar-title>
           Reward Form
         </v-toolbar-title>
       </v-toolbar>
@@ -76,14 +76,14 @@
             <v-col align="center" justify="center">
               <v-btn
                 :disabled="!valid"
-                color="success"
+                color="green"
                 class="mr-3"
                 v-on:click="createTransaction()"
               >
-                Create Transaction
+                Create Reward
               </v-btn>
 
-              <v-btn color="warning" class="mr-0" @click="reset">
+              <v-btn color="#FF9300" class="mr-0" @click="reset">
                 Reset Data
               </v-btn>
             </v-col>
@@ -198,6 +198,7 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           this.users = response.data;
+          this.users.splice(0, 1)
           this.convertData(this.users, 0);
         })
         .catch((error) => {
