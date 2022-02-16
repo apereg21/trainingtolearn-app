@@ -1,22 +1,22 @@
 <template>
   <v-card color="white" height="60px">
-    <v-toolbar color="#DAF7A6">
-      <v-btn class="ma-2" color="#A4BB7A" v-on:click="clickNA()">
+    <v-toolbar color="#5B943D">
+      <v-btn class="ma-2" color="#F7DB5E" v-on:click="clickNA()">
         New Account
         <v-icon dark right> mdi-account-plus </v-icon>
       </v-btn>
 
-      <v-btn class="ma-2" color="#A4BB7A"  v-on:click="clickNT()">
+      <v-btn class="ma-2" color="#F7DB5E"  v-on:click="clickNT()">
         New Reward
         <v-icon dark right> mdi-medal </v-icon>
       </v-btn>
 
-      <v-btn class="ma-2" color="#A4BB7A" v-on:click="clickNR()">
+      <v-btn class="ma-2" color="#F7DB5E" v-on:click="clickNR()">
         New Course
         <v-icon dark right> mdi-arm-flex </v-icon>
       </v-btn>
       <v-spacer />
-      <v-btn v-on:click="clickMP()" color="#A4BB7A" >
+      <v-btn v-on:click="clickMP()" color="#F7DB5E" >
         <v-icon class="ma-2" left>
           mdi-account-circle
         </v-icon>

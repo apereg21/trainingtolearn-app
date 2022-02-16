@@ -2,7 +2,7 @@
   <v-app id="keep" class="white">
     <ToolbarSpecial />
     <v-card class="justify-center mx-auto my-5" width="1200" height="550">
-      <v-toolbar color="#DAF7A6">
+      <v-toolbar color="#5B943D">
         <v-toolbar-title>
           Reward Form
         </v-toolbar-title>

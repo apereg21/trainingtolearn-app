@@ -2,7 +2,7 @@
   <v-app id="keep" class="white">
     <ToolbarSpecialPW />
     <v-card class="justify-center mx-auto my-5" width="800" height="725">
-      <v-toolbar color="#DAF7A6">
+      <v-toolbar color="#5B943D">
         <v-toolbar-title> My Profile </v-toolbar-title>
       </v-toolbar>
       <v-container fuild>
@@ -22,7 +22,7 @@
         ></v-text-field>
         <v-row>
           <v-col align="center" justify="center">
-            <v-btn color="#A4BB7A" v-on:click="getUserID()">Load Data</v-btn>
+            <v-btn color="#F7DB5E" v-on:click="getUserID()">Load Data</v-btn>
           </v-col>
           <v-col>
             <v-checkbox
@@ -93,7 +93,7 @@
         </v-text-field>
         <v-row no-gutters>
           <v-col align="center" justify="center">
-            <v-btn color="#A4BB7A" v-if="visibility2" v-on:click="changeData()"
+            <v-btn color="#F7DB5E" v-if="visibility2" v-on:click="changeData()"
               >Change Data</v-btn
             >
           </v-col>
@@ -202,6 +202,7 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           alert(response.data)
+          this.username=this.usnameN;
         })
         .catch((error) => {
           console.log(error);
@@ -209,7 +210,7 @@ export default {
         });
     },
     getUserData(id) {
-      const headers = {
+        const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
@@ -247,7 +248,13 @@ export default {
         .post("http://localhost:3000/getSpecificUserID/", data, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
-          this.getUserData(response.data);
+          if(response.data == ""){
+            alert("Can't load user information - Reason: Not Exist an User with those username and password")
+          }
+          else{
+            this.getUserData(response.data);
+          }
+          
         })
         .catch((error) => {
           console.log(error);

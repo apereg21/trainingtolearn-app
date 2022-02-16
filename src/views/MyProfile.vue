@@ -2,7 +2,7 @@
   <v-app id="keep" class="white">
     <ToolbarSpecial />
 <v-card class="justify-center mx-auto my-5" width="800" height="625">
-      <v-toolbar color="#DAF7A6">
+      <v-toolbar color="#5B943D">
         <v-toolbar-title>
           My Profile
         </v-toolbar-title>
@@ -16,11 +16,11 @@
         <v-container grid-list-md/>
         <v-container grid-list-md/>
         <v-row no-gutters align="center" justify="center">
-          <v-btn color="#A4BB7A" v-on:click="clickMD()">My data</v-btn>
+          <v-btn color="#F7DB5E" v-on:click="clickMD()">My data</v-btn>
         </v-row>
         <v-container grid-list-md/>
         <v-row no-gutters align="center" justify="center">
-          <v-btn color="#A4BB7A" v-on:click="clickMW()">My Wallet</v-btn>
+          <v-btn color="#F7DB5E" v-on:click="clickMW()">My Wallet</v-btn>
         </v-row>
       </v-container>
     </v-card>

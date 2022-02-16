@@ -2,7 +2,7 @@
   <v-app id="keep" class="white">
     <ToolbarSpecialPW />
     <v-card class="justify-center mx-auto my-5" width="1000" height="800">
-      <v-toolbar color="#DAF7A6">
+      <v-toolbar color="#5B943D">
         <v-toolbar-title >
           My Profile
         </v-toolbar-title>
@@ -24,7 +24,7 @@
         ></v-text-field>
         <v-row>
           <v-col align="center" justify="center">
-            <v-btn color="#A4BB7A" v-on:click="getUserID()">Load Data</v-btn>
+            <v-btn color="#F7DB5E" v-on:click="getUserID()">Load Data</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -63,7 +63,7 @@
 </template>
 <style scoped>
 ::v-deep .v-data-table-header {
-  background-color: #DAF7A6;
+  background-color: #5B943D;
 }
 </style>
 <script>
@@ -77,16 +77,16 @@ export default {
     money: 0,
     show: false,
     headers: [
-      { text: "Name", value: "nameUR", class:"#DAF7A6" },
-      { text: "Desc", value: "descriptionUR", class:"#DAF7A6" },
-      { text: "Cost", value: "cost", class:"#DAF7A6" },
+      { text: "Name", value: "nameUR", class:"#5B943D" },
+      { text: "Desc", value: "descriptionUR", class:"#5B943D" },
+      { text: "Cost", value: "cost", class:"#5B943D" },
     ],
     headers2: [
-      { text: "Type", value: "typeTransaction", color:"#DAF7A6" },
-      { text: "Money", value: "money", color:"#DAF7A6" },
-      { text: "UniRewardId", value: "UniRewardId", color:"#DAF7A6" },
-      { text: "From Address", value: "fromAddress", color:"#DAF7A6" },
-      { text: "To Address", value: "toAddress", color:"#DAF7A6" },
+      { text: "Type", value: "typeTransaction", color:"#5B943D" },
+      { text: "Money", value: "money", color:"#5B943D" },
+      { text: "UniRewardId", value: "UniRewardId", color:"#5B943D" },
+      { text: "From Address", value: "fromAddress", color:"#5B943D" },
+      { text: "To Address", value: "toAddress", color:"#5B943D" },
     ],
   }),
   props: {},
@@ -134,7 +134,12 @@ export default {
         .post("http://localhost:3000/getSpecificUserID/", data, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
-          this.getUserWalletData(response.data);
+          if(response.data == ""){
+            alert("Can't load user information - Reason: Not Exist an User with those username and password")
+          }
+          else{
+            this.getUserWalletData(response.data);
+          }
         })
         .catch((error) => {
           console.log(error);
