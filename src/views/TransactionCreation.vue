@@ -24,6 +24,7 @@
               :items="users"
               :rules="[(v) => !!v || 'User is required']"
               label="User Destiny"
+              :disabled="!visibility3"
               required
             ></v-select>
           </v-row>
@@ -111,6 +112,7 @@ export default {
     switch2: false,
     visibility1:true,
     visibility2:false,
+    visibility3:true,
     show: false,
     password: "",
     bodyRules: [
@@ -157,7 +159,7 @@ export default {
           this.typeTrans = "U";
           postData = {
             fromAddressUN: this.addFrom,
-            toAddressUN: this.addTo,
+            toAddressUN: "System",
             typeT: this.typeTrans,
             uniRewardT: this.uniR,
             moneyTo: parseInt(this.money),
@@ -237,14 +239,17 @@ export default {
       if(this.switch1==true){
         this.visibility1=true
         this.visibility2=false
+        this.visibility3=true
       }else{
         if(this.switch2==true){
           this.visibility1=true
           this.visibility2=true
+          this.visibility3=false
         }
         else{
           this.visibility1=false
           this.visibility2=false
+          this.visibility3=true
         }
       }
     }

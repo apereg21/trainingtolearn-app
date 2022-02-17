@@ -6,15 +6,16 @@
         <v-icon dark right> mdi-account-plus </v-icon>
       </v-btn>
 
+      <v-btn class="ma-2" color="#F7DB5E" v-on:click="clickNR()">
+        New Course
+        <v-icon dark right> mdi-arm-flex </v-icon>
+      </v-btn>
+
       <v-btn class="ma-2" color="#F7DB5E"  v-on:click="clickNT()">
         New Reward
         <v-icon dark right> mdi-medal </v-icon>
       </v-btn>
 
-      <v-btn class="ma-2" color="#F7DB5E" v-on:click="clickNR()">
-        New Course
-        <v-icon dark right> mdi-arm-flex </v-icon>
-      </v-btn>
       <v-spacer />
       <v-btn v-on:click="clickMP()" color="#F7DB5E" >
         <v-icon class="ma-2" left>

@@ -1,7 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
-    <v-card class="justify-center mx-auto my-5" width="800" height="625">
+    <v-card class="justify-center mx-auto my-5" width="800" height="525">
       <v-toolbar color="#5B943D">
         <v-toolbar-title>
           Course Form
@@ -23,14 +23,6 @@
               v-model="descriptionUR"
               :rules="bodyRules"
               label="Description Course"
-              required
-            ></v-text-field>
-          </v-row>
-          <v-row no-gutters>
-            <v-text-field
-              v-model="imageUR"
-              :rules="bodyRules"
-              label="Image (Optional)"
               required
             ></v-text-field>
           </v-row>
@@ -108,7 +100,7 @@ export default {
     valid: true,
     name: "",
     descriptionUR: "",
-    imageUR: "",
+    imageUR: "https://edit.org/images/cat/diplomas-certificados-big-2020042416.jpg",
     password:"",
     show:false,
     costReward: 0,
