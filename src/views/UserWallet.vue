@@ -77,16 +77,16 @@ export default {
     money: 0,
     show: false,
     headers: [
-      { text: "Name", value: "nameUR", class:"#5B943D" },
-      { text: "Desc", value: "descriptionUR", class:"#5B943D" },
-      { text: "Cost", value: "cost", class:"#5B943D" },
+      { text: "Name of UniReward", value: "nameUR", class:"#5B943D" },
+      { text: "Description of UniReward", value: "descriptionUR", class:"#5B943D" },
+      { text: "Cost (UniPoints)", value: "cost", class:"#5B943D" },
     ],
     headers2: [
-      { text: "Type", value: "typeTransaction", color:"#5B943D" },
-      { text: "Money", value: "money", color:"#5B943D" },
-      { text: "UniRewardId", value: "UniRewardId", color:"#5B943D" },
-      { text: "From Address", value: "fromAddress", color:"#5B943D" },
-      { text: "To Address", value: "toAddress", color:"#5B943D" },
+      { text: "Type Operation", value: "typeTransaction", color:"#5B943D" },
+      { text: "Points", value: "money", color:"#5B943D" },
+      { text: "Name of UniReward", value: "UniRewardId", color:"#5B943D" },
+      { text: "From", value: "fromAddress", color:"#5B943D" },
+      { text: "To", value: "toAddress", color:"#5B943D" },
     ],
   }),
   props: {},
@@ -112,7 +112,6 @@ export default {
           } else {
             this.transactions = response.data[1];
           }
-          alert(response.data);
         })
         .catch((error) => {
           console.log(error);
