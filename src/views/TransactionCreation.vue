@@ -158,8 +158,8 @@ export default {
         } else {
           this.typeTrans = "U";
           postData = {
-            fromAddressUN: this.addFrom,
-            toAddressUN: "System",
+            fromAddressUN: "System",
+            toAddressUN: this.addFrom,
             typeT: this.typeTrans,
             uniRewardT: this.uniR,
             moneyTo: parseInt(this.money),
