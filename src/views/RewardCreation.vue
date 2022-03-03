@@ -129,7 +129,6 @@ export default {
         username:this.username,
         password:this.password
       };
-      alert(postData.costReward)
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",

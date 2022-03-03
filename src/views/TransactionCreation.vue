@@ -1,7 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
-    <v-card class="justify-center mx-auto my-5" width="1200" height="550">
+    <v-card class="justify-center mx-auto my-5" width="1200" height="600">
       <v-toolbar color="#5B943D">
         <v-toolbar-title>
           Reward Form
@@ -27,6 +27,15 @@
               :disabled="!visibility3"
               required
             ></v-select>
+          </v-row>
+          <v-row no-gutters>
+            <v-text-field
+                v-model="conceptT"
+                :rules="[(v) => !!v || 'UniPoints Field is required']"
+                label="Concept of Reward"
+                :disabled="!visibility3"
+                align-left
+              ></v-text-field>
           </v-row>
           <v-row no-gutters>
             <v-col>
@@ -108,6 +117,7 @@ export default {
     uniR: "",
     name: "",
     typeTrans: "",
+    conceptT:"",
     switch1: true,
     switch2: false,
     visibility1:true,
@@ -154,6 +164,7 @@ export default {
             typeT: this.typeTrans,
             moneyTo: parseInt(this.money),
             passwordFrom: this.password,
+            concept: this.conceptT
           };
         } else {
           this.typeTrans = "U";
@@ -164,6 +175,7 @@ export default {
             uniRewardT: this.uniR,
             moneyTo: parseInt(this.money),
             passwordFrom: this.password,
+            concept: "default"
           };
         }
 
@@ -178,7 +190,7 @@ export default {
           })
           .then((response) => {
             console.log("Server response: " + response.data);
-            alert(response.data);
+            alert(response.data)
           })
           .catch((error) => {
             console.log(error);
