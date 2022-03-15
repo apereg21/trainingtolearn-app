@@ -7,6 +7,8 @@ import RewardCreation from "@/views/RewardCreation";
 import MyProfile from "@/views/MyProfile";
 import UserProfile from "@/views/UserProfile";
 import UserWallet from "@/views/UserWallet";
+import RewardUP from "@/views/RewardUP";
+import RewardUR from "@/views/RewardUR";
 
 Vue.use(VueRouter)
 
@@ -44,6 +46,16 @@ const routes = [{
     path: "/UserWallet",
     name: "UserWallet",
     component: UserWallet,
+    props: true
+}, {
+    path: "/RewardUP",
+    name: "RewardUP",
+    component: RewardUP,
+    props: true
+}, {
+    path: "/RewardUR",
+    name: "RewardUR",
+    component: RewardUR,
     props: true
 }];
 

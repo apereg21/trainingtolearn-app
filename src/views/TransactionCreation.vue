@@ -1,274 +1,52 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
-    <v-card class="justify-center mx-auto my-5" width="1200" height="600">
+    <v-card class="justify-center mx-auto my-5" width="800" height="625">
       <v-toolbar color="#5B943D">
-        <v-toolbar-title>
-          Reward Form
-        </v-toolbar-title>
+        <v-toolbar-title> Reward Selection </v-toolbar-title>
       </v-toolbar>
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-container>
-          <v-row no-gutters>
-            <v-select
-              v-model="addFrom"
-              :items="users"
-              :rules="[(v) => !!v || 'User is required']"
-              label="User From"
-              required
-            ></v-select>
-          </v-row>
-          <v-row no-gutters>
-            <v-select
-              v-model="addTo"
-              :items="users"
-              :rules="[(v) => !!v || 'User is required']"
-              label="User Destiny"
-              :disabled="!visibility3"
-              required
-            ></v-select>
-          </v-row>
-          <v-row no-gutters>
-            <v-text-field
-                v-model="conceptT"
-                :rules="[(v) => !!v || 'UniPoints Field is required']"
-                label="Concept of Reward"
-                :disabled="!visibility3"
-                align-left
-              ></v-text-field>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-              <v-container fluid>
-                <v-switch
-                  v-model="switch1"
-                  label="Delivery UniPoints"
-                  @click="proveSwitch"
-                ></v-switch>
-                <v-switch
-                  v-model="switch2"
-                  label="UniReward Adquisition"
-                  @click="proveSwitch2"
-                ></v-switch>
-              </v-container>
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="money"
-                :rules="[(v) => !!v || 'UniPoints Field is required']"
-                label="UniPoints cost"
-                :disabled="!visibility1"
-                
-                align-left
-              ></v-text-field>
-              <v-select
-                v-model="uniR"
-                :items="unirewards"
-                :rules="[(v) => !!v || 'UniReward is required']"
-                label="UniReward Wanted"
-                :disabled="!visibility2"
-                align-left
-              ></v-select>
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-text-field
-              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show ? 'text' : 'password'"
-              name="input-10-2"
-              label="Password User"
-              v-model="password"
-              class="input-group--focused"
-              @click:append="show = !show"
-            ></v-text-field>
-          </v-row>
-          <v-row>
-            <v-col align="center" justify="center">
-              <v-btn
-                :disabled="!valid"
-                color="green"
-                class="mr-3"
-                v-on:click="createTransaction()"
-              >
-                Create Reward
-              </v-btn>
-
-              <v-btn color="#FF9300" class="mr-0" @click="reset">
-                Reset Data
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
+      <v-container fluid>
+        <v-container grid-list-md />
+        <v-container grid-list-md />
+        <v-container grid-list-md />
+        <v-container grid-list-md />
+        <v-container grid-list-md />
+        <v-container grid-list-md />
+        <v-container grid-list-md />
+        <v-row no-gutters align="center" justify="center">
+          <v-btn color="#F7DB5E" v-on:click="clickRUP()">UniPoints</v-btn>
+        </v-row>
+        <v-container grid-list-md />
+        <v-row no-gutters align="center" justify="center">
+          <v-btn color="#F7DB5E" v-on:click="clickRUR()">UniReward</v-btn>
+        </v-row>
+      </v-container>
     </v-card>
   </v-app>
 </template>
 
 <script>
 import ToolbarSpecial from "@/components/ToolbarSpecial";
-const axios = require("axios");
 export default {
   name: "TransactionCreation",
-  data: () => ({
-    valid: true,
-    addFrom: "",
-    addTo: "",
-    money: 0,
-    uniR: "",
-    name: "",
-    typeTrans: "",
-    conceptT:"",
-    switch1: true,
-    switch2: false,
-    visibility1:true,
-    visibility2:false,
-    visibility3:true,
-    show: false,
-    password: "",
-    bodyRules: [
-      (v) => !!v || "Data field is required"
-    ],
-    users: [],
-    unirewards: [],
-  }),
+  data: () => ({}),
   props: {},
   components: {
     ToolbarSpecial,
   },
   computed: {},
+
   methods: {
-    proveSwitch() {
-      if (this.switch1 == true) {
-        if (this.switch2 == true) {
-          this.switch2 = false;
-        }
-      }
-      this.changeVisibility()
+    clickRUP() {
+      this.$router.push({
+        name: "RewardUP",
+      });
     },
-    proveSwitch2() {
-      if (this.switch2 == true) {
-        if (this.switch1 == true) {
-          this.switch1 = false;
-        }
-      }
-      this.changeVisibility()
+    clickRUR() {
+      this.$router.push({
+        name: "RewardUR",
+      });
     },
-    createTransaction() {
-      if (this.$refs.form.validate() == true) {
-        var postData;
-        if (this.switch1 == true) {
-          this.typeTrans = "M";
-          postData = {
-            fromAddressUN: this.addFrom,
-            toAddressUN: this.addTo,
-            typeT: this.typeTrans,
-            moneyTo: parseInt(this.money),
-            passwordFrom: this.password,
-            concept: this.conceptT
-          };
-        } else {
-          this.typeTrans = "U";
-          postData = {
-            fromAddressUN: "System",
-            toAddressUN: this.addFrom,
-            typeT: this.typeTrans,
-            uniRewardT: this.uniR,
-            moneyTo: parseInt(this.money),
-            passwordFrom: this.password,
-            concept: "default"
-          };
-        }
-
-        const headers = {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        };
-
-        axios
-          .post("http://localhost:3000/createNewTransaction", postData, {
-            headers,
-          })
-          .then((response) => {
-            console.log("Server response: " + response.data);
-            alert(response.data)
-          })
-          .catch((error) => {
-            console.log(error);
-            alert(error);
-          });
-      }
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    getUsersDatabase() {
-      const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      };
-
-      axios
-        .get("http://localhost:3000/getAllUsersList", { headers })
-        .then((response) => {
-          console.log("Server response: " + response.data);
-          this.users = response.data;
-          this.users.splice(0, 1)
-          this.convertData(this.users, 0);
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error);
-        });
-    },
-    getRewardsDatabase() {
-      const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      };
-
-      axios
-        .get("http://localhost:3000/getAllRewardsList", { headers })
-        .then((response) => {
-          console.log("Server response: " + response.data);
-          this.unirewards = response.data;
-          this.convertData(this.unirewards, 1);
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error);
-        });
-    },
-    convertData(vector, opc) {
-      for (let i = 0; i < vector.length; i++) {
-        if (opc == 0) {
-          this.users[i] = vector[i].username;
-        } else {
-          this.unirewards[i] = vector[i].nameUR;
-        }
-      }
-    },
-    changeVisibility(){
-      if(this.switch1==true){
-        this.visibility1=true
-        this.visibility2=false
-        this.visibility3=true
-      }else{
-        if(this.switch2==true){
-          this.visibility1=true
-          this.visibility2=true
-          this.visibility3=false
-        }
-        else{
-          this.visibility1=false
-          this.visibility2=false
-          this.visibility3=true
-        }
-      }
-    }
-  },
-  mounted() {
-    this.getUsersDatabase();
-    this.getRewardsDatabase();
   },
 };
 </script>
