@@ -1,7 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
-    <v-card class="justify-center mx-auto my-5" width="1200" height="500">
+    <v-card class="justify-center mx-auto my-5" width="1200" height="600">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> Reward Of UniPoints </v-toolbar-title>
       </v-toolbar>
@@ -23,6 +23,15 @@
               :rules="[(v) => !!v || 'User is required']"
               label="User Destiny"
               required
+            ></v-select>
+          </v-row>
+          <v-row no-gutters>
+            <v-select
+              v-model="uniR"
+              :items="unirewards"
+              :rules="[(v) => !!v || 'UniReward is required']"
+              label="UniReward linked to this UniPoints"
+              align-left
             ></v-select>
           </v-row>
           <v-row no-gutters>
@@ -110,6 +119,7 @@ export default {
           moneyTo: parseInt(this.money),
           passwordFrom: this.password,
           concept: this.conceptT,
+          uniReward: this.uniR
         };
 
         const headers = {

@@ -127,7 +127,8 @@ export default {
         imageUR: this.imageUR,
         costReward: parseInt(this.costReward),
         username:this.username,
-        password:this.password
+        password:this.password,
+        usernameCourse: this.userCourse
       };
       const headers = {
         "Content-Type": "application/json",
