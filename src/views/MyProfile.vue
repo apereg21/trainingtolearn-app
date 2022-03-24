@@ -34,30 +34,26 @@ export default {
   data: () => ({
   }),
   props: {
-    idUsuario: { type: String, default: "" },
   },
   components: {
     ToolbarSpecial,
   },
   computed: {
-    persistData();
+    
   },
 
   methods: {
     clickMD(){
       this.$router.push({
         name: "UserProfile",
-        params: { idUsuario: this.idUsuario }
+        params: { idUser: this.idUser }
       });
     },
     clickMW(){
       this.$router.push({
         name: "UserWallet",
-        params: { idUsuario: this.idUsuario }
+        params: { idUser: this.idUser }
       });
-    },
-    persistData(){
-      alert(this.idUsuario)
     }
   }
 };

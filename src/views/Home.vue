@@ -2,14 +2,14 @@
   <v-app id="keep" class="white">
     <v-card color="white" height="60px">
       <v-toolbar color="#5B943D">
-        <v-btn v-if="(this.idUsuario === '')" class="ma-2" color="#F7DB5E" v-on:click="clickNA()">
+        <v-btn v-if="(isUser === '')" class="ma-2" color="#F7DB5E" v-on:click="clickNA()">
           Register/Log In
           <v-icon dark right> mdi-account-plus </v-icon>
         </v-btn>
 
         <v-btn
           class="ma-2"
-          v-if="!(this.idUsuario === '')"
+          v-if="!(isUser === '')"
           color="#F7DB5E"
           v-on:click="clickNR()"
         >
@@ -19,7 +19,7 @@
 
         <v-btn
           class="ma-2"
-          v-if="!(this.idUsuario === '')"
+          v-if="!(isUser === '')"
           color="#F7DB5E"
           v-on:click="clickNT()"
         >
@@ -29,7 +29,7 @@
 
         <v-spacer />
         <v-btn
-          v-if="!(this.idUsuario === '')"
+          v-if="!( isUser === '')"
           v-on:click="clickMP()"
           color="#F7DB5E"
         >
@@ -42,39 +42,39 @@
 </template>
 
 <script>
-
 export default {
   name: "Home",
   data: () => ({}),
   props: {
-    idUsuario: { type: String, default: "" },
   },
-  computed: {},
+  computed: {
+     isUser(){
+      return this.$store.state.idUser
+    }
+  },
   methods: {
     clickNA: function () {
       this.$router.push({
         name: "UserRegistration",
-        params: { idUsuario: this.idUsuario }
       });
     },
     clickNT: function () {
       this.$router.push({
         name: "TransactionCreation",
-        params: { idUsuario: this.idUsuario }
       });
     },
     clickNR: function () {
       this.$router.push({
         name: "RewardCreation",
-        params: { idUsuario: this.idUsuario }
       });
     },
     clickMP: function () {
       this.$router.push({
         name: "MyProfile",
-        params: { idUsuario: this.idUsuario }
       });
-    },
+    }
   },
+  mounted: function(){
+  }
 };
 </script>

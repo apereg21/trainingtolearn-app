@@ -7,27 +7,6 @@
           My Profile
         </v-toolbar-title>
       </v-toolbar>
-      <v-container fuild>
-        <v-text-field
-          v-model="username"
-          label="username"
-          align-left
-        ></v-text-field>
-        <v-text-field
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="show ? 'text' : 'password'"
-          name="input-10-2"
-          label="Password User"
-          v-model="password"
-          class="input-group--focused"
-          @click:append="show = !show"
-        ></v-text-field>
-        <v-row>
-          <v-col align="center" justify="center">
-            <v-btn color="#F7DB5E" v-on:click="getUserID()">Load Data</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
       <v-container>
         <v-text-field
           v-model="money"
@@ -94,15 +73,17 @@ export default {
     ToolbarSpecialPW,
   },
   computed: {},
-
+  mounted:function(){
+    this.getUserWalletData()
+  },
   methods: {
-    getUserWalletData(id) {
+    getUserWalletData() {
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
       axios
-        .get("http://localhost:3000/getSpecificWallet/:" + id, { headers })
+        .get("http://localhost:3000/getSpecificWallet/:" + this.$store.state.idUser, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
           this.money = response.data[0].money.length;
@@ -118,33 +99,6 @@ export default {
           alert(error);
         });
     },
-    getUserID() {
-      const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      };
-
-      const data = {
-        username: this.username,
-        password: this.password,
-      };
-
-      axios
-        .post("http://localhost:3000/getSpecificUserID/", data, { headers })
-        .then((response) => {
-          console.log("Server response: " + response.data);
-          if(response.data == ""){
-            alert("Can't load user information - Reason: Not Exist an User with those username and password")
-          }
-          else{
-            this.getUserWalletData(response.data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error);
-        });
-    },
-  },
+  }
 };
 </script>

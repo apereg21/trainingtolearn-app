@@ -116,18 +116,20 @@ export default {
   }),
   
   props: {
-    idUsuario: { type: String, default: "" },
+
   },
 
   components: {
     ToolbarSpecialPW,
   },
   computed: {
-    callGetUserData: function() {
-      return this.getUserData(this.idUsuario);
-    }
+    idUser() {
+      return this.$store.state.idUser;
+    }    
   },
-
+  mounted: function(){
+    this.findData()
+  },
   methods: {
     activateFields() {
       if (this.checkbox == true) {
@@ -195,13 +197,13 @@ export default {
           alert(error)
         });
     },
-    getUserData(id) {
-        const headers = {
+    findData() {
+      const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
       axios
-        .get("http://localhost:3000/getSpecificUser/:" + id, { headers })
+        .get("http://localhost:3000/getSpecificUser/:" + this.$store.state.idUser, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
           this.name = response.data.name;
@@ -218,35 +220,7 @@ export default {
           console.log(error);
           alert(error);
         });
-    },
-    getUserID() {
-      const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      };
-
-      const data = {
-        username: this.username,
-        password: this.password,
-      };
-
-      axios
-        .post("http://localhost:3000/getSpecificUserID/", data, { headers })
-        .then((response) => {
-          console.log("Server response: " + response.data);
-          if(response.data == ""){
-            alert("Can't load user information - Reason: Not Exist an User with those username and password")
-          }
-          else{
-            this.getUserData(response.data);
-          }
-          
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error);
-        });
-    },
+    }
   }
 };
 </script>

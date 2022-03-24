@@ -35,7 +35,8 @@
                 :disabled="!valid"
                 color="green"
                 class="mr-3"
-                v-on:click="createAccount()"
+                v-on:click="loginUser
+          ()"
               >
                 Log in
               </v-btn>
@@ -71,22 +72,24 @@ export default {
   },
   computed: {},
 
+
+
   methods: {
     goToRegistration: function () {
       this.$router.push({
         name: "UserCreation",
-        params: { idUsuario: this.username }
+        params: { idUser: this.username }
       });
       
     },
     goToHome: function () {
       this.$router.push({
         name: "Home",
-        params: { idUsuario: this.username }
+        params: { idUser: this.username }
       });
       
     },
-    createAccount() {
+    loginUser() {
       if(this.$refs.form.validate()==true){
         var postData = {
         username: this.username,
@@ -102,8 +105,11 @@ export default {
         .post("http://localhost:3000/loginUser", postData, {headers})
         .then((response) => {
           //TODO Devolver de alguna manera solamente el nombre y no la id
-            alert("Welcome "+response.data)
-            this.goToHome()
+            if(!(isNaN(response.data))){
+              alert("Welcome to the plataform Mr/Mrs")
+              this.$store.commit("SET_IDUSER",response.data)
+              this.goToHome()
+            }
         })
         .catch((error) => {
           console.log(error);
