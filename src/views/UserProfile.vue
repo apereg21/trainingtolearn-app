@@ -5,34 +5,6 @@
       <v-toolbar color="#5B943D">
         <v-toolbar-title> My Profile </v-toolbar-title>
       </v-toolbar>
-      <v-container fuild>
-        <v-text-field
-          v-model="username"
-          label="username"
-          align-left
-        ></v-text-field>
-        <v-text-field
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="show ? 'text' : 'password'"
-          name="input-10-2"
-          label="Password User"
-          v-model="password"
-          class="input-group--focused"
-          @click:append="show = !show"
-        ></v-text-field>
-        <v-row>
-          <v-col align="center" justify="center">
-            <v-btn color="#F7DB5E" v-on:click="getUserID()">Load Data</v-btn>
-          </v-col>
-          <v-col>
-            <v-checkbox
-              v-model="checkbox"
-              label="Do you want to change Data?"
-              v-on:click="activateFields()"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
       <v-container fuild v-if="visibility1">
         <v-text-field 
           v-model="name" 
@@ -99,6 +71,16 @@
           </v-col>
         </v-row>
       </v-container>
+      <v-container fuild>
+        <v-row no-gutters justify="center">
+            <v-checkbox
+             
+              v-model="checkbox"
+              label="Do you want to change Data?"
+              v-on:click="activateFields()"
+            />
+        </v-row>
+      </v-container>
     </v-card>
   </v-app>
 </template>
@@ -132,11 +114,19 @@ export default {
     visibility1: true,
     visibility2: false,
   }),
-  props: {},
+  
+  props: {
+    idUsuario: { type: String, default: "" },
+  },
+
   components: {
     ToolbarSpecialPW,
   },
-  computed: {},
+  computed: {
+    callGetUserData: function() {
+      return this.getUserData(this.idUsuario);
+    }
+  },
 
   methods: {
     activateFields() {
@@ -169,19 +159,15 @@ export default {
           console.log(key)
           switch (key) {
             case 'usernameN':
-              console.log("Habemus")
               postData.changes.push("u")
             break;
             case 'passwordN':
-              console.log("Habemus")
              postData.changes.push("p")
             break;
             case 'fullSurnameN':
-              console.log("Habemus")
               postData.changes.push("f")
             break;
             case 'nameN':
-              console.log("Habemus")
               postData.changes.push("n")
             break;
             default:
@@ -261,6 +247,6 @@ export default {
           alert(error);
         });
     },
-  },
+  }
 };
 </script>

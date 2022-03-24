@@ -9,6 +9,7 @@ import UserProfile from "@/views/UserProfile";
 import UserWallet from "@/views/UserWallet";
 import RewardUP from "@/views/RewardUP";
 import RewardUR from "@/views/RewardUR";
+import UserRegistration from "@/views/UserRegistration";
 
 Vue.use(VueRouter)
 
@@ -56,6 +57,11 @@ const routes = [{
     path: "/RewardUR",
     name: "RewardUR",
     component: RewardUR,
+    props: true
+}, {
+    path: "/UserRegistration",
+    name: "UserRegistration",
+    component: UserRegistration,
     props: true
 }];
 
