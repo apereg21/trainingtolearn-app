@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        idUser: ""
+        idUser: "",
+        roleUser: ""
     },
     mutations: {
         SET_IDUSER: (state, idUser) => {
             state.idUser = idUser
+        },
+        SET_ROLE: (state, roleUser) => {
+            state.roleUser = roleUser
         }
     },
     actions: {},

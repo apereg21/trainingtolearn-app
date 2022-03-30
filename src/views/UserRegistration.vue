@@ -3,9 +3,7 @@
     <ToolbarSpecial />
     <v-card class="justify-center mx-auto my-5" width="800" height="300">
       <v-toolbar color="#5B943D">
-        <v-toolbar-title>
-          User Form
-        </v-toolbar-title>
+        <v-toolbar-title> User Form </v-toolbar-title>
       </v-toolbar>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-container>
@@ -35,13 +33,16 @@
                 :disabled="!valid"
                 color="green"
                 class="mr-3"
-                v-on:click="loginUser
-          ()"
+                v-on:click="loginUser()"
               >
                 Log in
               </v-btn>
 
-              <v-btn color="#0098D6" class="mr-0" v-on:click="goToRegistration()">
+              <v-btn
+                color="#0098D6"
+                class="mr-0"
+                v-on:click="goToRegistration()"
+              >
                 Register
               </v-btn>
             </v-col>
@@ -59,62 +60,69 @@ export default {
   name: "UserRegistration",
   data: () => ({
     valid: true,
-    show:false,
+    show: false,
     username: "",
     password: "",
     bodyRules: [
       (v) => !!v || "Data field is required",
       (v) => (v && v.length >= 3) || "Name must be less than 3 characters",
-    ]
+    ],
   }),
   components: {
     ToolbarSpecial,
   },
   computed: {},
 
-
-
   methods: {
     goToRegistration: function () {
       this.$router.push({
         name: "UserCreation",
-        params: { idUser: this.username }
+        params: { idUser: this.username },
       });
-      
     },
     goToHome: function () {
       this.$router.push({
         name: "Home",
-        params: { idUser: this.username }
+        params: { idUser: this.username },
       });
-      
     },
     loginUser() {
-      if(this.$refs.form.validate()==true){
+      if (this.$refs.form.validate() == true) {
         var postData = {
-        username: this.username,
-        password: this.password
-      };
-      
-      const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      };
+          username: this.username,
+          password: this.password,
+        };
 
-      axios
-        .post("http://localhost:3000/loginUser", postData, {headers})
-        .then((response) => {
-          //TODO Devolver de alguna manera solamente el nombre y no la id
-            if(!(isNaN(response.data))){
-              alert("Welcome to the plataform Mr/Mrs")
-              this.$store.commit("SET_IDUSER",response.data)
-              this.goToHome()
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        };
+
+        axios
+          .post("http://localhost:3000/loginUser", postData, { headers })
+          .then((response) => {
+            if (!isNaN(response.data)) {
+              alert("Welcome to the plataform Mr/Mrs");
+              this.$store.commit("SET_IDUSER", response.data);
+              axios
+                .get("http://localhost:3000/getUserRole/:"+this.$store.state.idUser, { headers })
+                .then((response2) => {
+                  this.$store.commit("SET_ROLE", response2.data);
+                  this.goToHome();
+                })
+                .catch((error) => {
+                  console.log(error);
+                  alert(error);
+                });
+              
+            } else {
+              alert(response.data);
             }
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error)
-        });
+          })
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
       }
     },
     reset() {

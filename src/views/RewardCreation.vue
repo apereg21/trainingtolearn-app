@@ -3,9 +3,7 @@
     <ToolbarSpecial />
     <v-card class="justify-center mx-auto my-5" width="800" height="525">
       <v-toolbar color="#5B943D">
-        <v-toolbar-title>
-          Course Form
-        </v-toolbar-title>
+        <v-toolbar-title> Course Form </v-toolbar-title>
       </v-toolbar>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-container>
@@ -35,17 +33,6 @@
             ></v-text-field>
           </v-row>
           <v-row no-gutters>
-            <v-col>
-              <v-select
-                class="mr-3"
-                v-model="username"
-                :items="users"
-                :rules="[(v) => !!v || 'User is required']"
-                label="User Instructor"
-                required
-              ></v-select>
-            </v-col>
-            <v-col>
               <v-text-field
                 :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show ? 'text' : 'password'"
@@ -54,17 +41,16 @@
                 class="input-group--focused"
                 @click:append="show = !show"
               ></v-text-field>
-            </v-col>
           </v-row>
           <v-row no-gutters>
             <v-select
-                class="mr-3"
-                v-model="userCourse"
-                :items="users"
-                :rules="[(v) => !!v || 'User is required']"
-                label="User in Course"
-                required
-              ></v-select>
+              class="mr-3"
+              v-model="userCourse"
+              :items="users"
+              :rules="[(v) => !!v || 'User is required']"
+              label="User in Course"
+              required
+            ></v-select>
           </v-row>
           <v-row>
             <v-col align="center" justify="center">
@@ -77,10 +63,7 @@
                 Create Course
               </v-btn>
 
-              <v-btn 
-              color="#FF9300" 
-              class="mr-0" 
-              @click="reset">
+              <v-btn color="#FF9300" class="mr-0" @click="reset">
                 Reset Data
               </v-btn>
             </v-col>
@@ -100,11 +83,12 @@ export default {
     valid: true,
     name: "",
     descriptionUR: "",
-    imageUR: "https://edit.org/images/cat/diplomas-certificados-big-2020042416.jpg",
-    password:"",
-    show:false,
+    imageUR:
+      "https://edit.org/images/cat/diplomas-certificados-big-2020042416.jpg",
+    password: "",
+    show: false,
     costReward: 0,
-    userCourse:"",
+    userCourse: "",
     bodyRules: [
       (v) => !!v || "Data field is required",
       (v) => (v && v.length >= 3) || "Name must be less than 3 characters",
@@ -119,6 +103,25 @@ export default {
   computed: {},
 
   methods: {
+    getUserUsername(){
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        };
+
+        axios
+          .get("http://localhost:3000/getUsersName/:"+this.$store.state.idUser, {
+            headers,
+          })
+          .then((response) => {
+            console.log("Server response: " + response.data)
+            this.username = response.data
+          })
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+    },
     createReward() {
       this.$refs.form.validate();
       var postData = {
@@ -126,9 +129,9 @@ export default {
         descriptionUR: this.descriptionUR,
         imageUR: this.imageUR,
         costReward: parseInt(this.costReward),
-        username:this.username,
-        password:this.password,
-        usernameCourse: this.userCourse
+        username: this.username,
+        password: this.password,
+        usernameCourse: this.userCourse,
       };
       const headers = {
         "Content-Type": "application/json",
@@ -140,6 +143,8 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           alert(response.data);
+          
+          this.goHome();
         })
         .catch((error) => {
           console.log(error);
@@ -156,7 +161,8 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           this.users = response.data;
-          this.users.splice(0, 1)
+          this.users.splice(parseInt(this.$store.state.idUser)-1,1)
+          this.users.splice(0, 1);
           this.convertData(this.users, 0);
         })
         .catch((error) => {
@@ -172,9 +178,15 @@ export default {
     reset() {
       this.$refs.form.reset();
     },
+    goHome() {
+      this.$router.push({
+        name: "Home",
+      });
+    },
   },
   mounted() {
     this.getUsersDatabase();
+    this.getUserUsername();
   },
 };
 </script>

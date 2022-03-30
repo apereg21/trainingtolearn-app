@@ -94,10 +94,6 @@ export default {
     id: "",
     userData: [],
 
-    username: "",
-    password: "",
-    prueba: "",
-
     name: "",
     uspass: "",
     fullsurname: "",
@@ -147,11 +143,11 @@ export default {
     changeData() {
       var postData = {
         "usernameN": this.usnameN,
-        "passwordN": this.uspassN,
+        "passwordN": this.uspass,
         "fullSurnameN": this.fullsurnameN,
         "nameN": this.nameN,
-        "username": this.username,
-        "password": this.password,
+        "username": this.usname,
+        "password": this.uspass,
         "changes": []
       };
 
@@ -161,22 +157,35 @@ export default {
           console.log(key)
           switch (key) {
             case 'usernameN':
-              postData.changes.push("u")
+              if(postData[key]!=this.usname){
+                postData.changes.push("u")
+              }else{
+                delete postData[key];
+              }    
             break;
             case 'passwordN':
-             postData.changes.push("p")
+             if(postData[key]!=this.uspass){
+                postData.changes.push("p")
+              }else{
+                delete postData[key];
+              } 
             break;
             case 'fullSurnameN':
-              postData.changes.push("f")
+              if(postData[key]!=this.fullsurname){
+                postData.changes.push("f")
+              }else{
+                delete postData[key];
+              } 
             break;
             case 'nameN':
-              postData.changes.push("n")
+              if(postData[key]!=this.name){
+                postData.changes.push("n")
+              }else{
+                delete postData[key];
+              } 
             break;
             default:
           }
-        }
-        else{
-          delete postData[key];
         }
       }
 

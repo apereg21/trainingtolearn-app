@@ -9,7 +9,7 @@
 
         <v-btn
           class="ma-2"
-          v-if="!(isUser === '')"
+          v-if="!(isUser === '') && !(isUser === 'N')"
           color="#F7DB5E"
           v-on:click="clickNR()"
         >
@@ -28,13 +28,26 @@
         </v-btn>
 
         <v-spacer />
+
         <v-btn
+          class="ma-2"
+          v-if="!(isUser === '')"
+          color="#F7DB5E"
+          v-on:click="refresh()"
+        >
+          Logout
+          <v-icon dark right> mdi-account-minus </v-icon>
+        </v-btn>
+
+        <v-btn
+          class="ma-2"
           v-if="!( isUser === '')"
           v-on:click="clickMP()"
           color="#F7DB5E"
         >
-          <v-icon class="ma-2" left> mdi-account-circle </v-icon>
           My Profile
+          <v-icon dark right> mdi-account-circle </v-icon>
+          
         </v-btn>
       </v-toolbar>
     </v-card>
@@ -48,8 +61,11 @@ export default {
   props: {
   },
   computed: {
-     isUser(){
+    isUser(){
       return this.$store.state.idUser
+    },
+    typeUs(){
+      return this.$store.state.roleUser
     }
   },
   methods: {
@@ -71,6 +87,12 @@ export default {
     clickMP: function () {
       this.$router.push({
         name: "MyProfile",
+      });
+    },
+    refresh: function(){
+        this.$store.commit("SET_IDUSER","")
+        this.$router.push({
+        name: "Home",
       });
     }
   },

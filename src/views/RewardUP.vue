@@ -9,15 +9,6 @@
         <v-container>
           <v-row no-gutters>
             <v-select
-              v-model="addFrom"
-              :items="users"
-              :rules="[(v) => !!v || 'User is required']"
-              label="User From"
-              required
-            ></v-select>
-          </v-row>
-          <v-row no-gutters>
-            <v-select
               v-model="addTo"
               :items="users"
               :rules="[(v) => !!v || 'User is required']"
@@ -155,6 +146,7 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           this.users = response.data;
+          this.users.splice(parseInt(this.$store.state.idUser)-1,1)
           this.users.splice(0, 1);
           this.convertData(this.users, 0);
         })
@@ -170,7 +162,7 @@ export default {
       };
 
       axios
-        .get("http://localhost:3000/getAllRewardsList", { headers })
+        .get("http://localhost:3000/getAllRewardsList/:"+this.$store.state.idUser+"/:"+false, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
           this.unirewards = response.data;
@@ -190,10 +182,30 @@ export default {
         }
       }
     },
+    getUserUsername(){
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        };
+
+        axios
+          .get("http://localhost:3000/getUsersName/:"+this.$store.state.idUser, {
+            headers,
+          })
+          .then((response) => {
+            console.log("Server response: " + response.data)
+            this.addFrom = response.data
+          })
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+    },
   },
   mounted() {
     this.getUsersDatabase();
     this.getRewardsDatabase();
+    this.getUserUsername();
   },
 };
 </script>
