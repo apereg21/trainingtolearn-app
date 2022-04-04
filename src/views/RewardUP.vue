@@ -28,7 +28,7 @@
           <v-row no-gutters>
             <v-text-field
               v-model="conceptT"
-              :rules="[(v) => !!v || 'UniPoints Field is required']"
+              :rules="[(v) => !!v || 'UniPoints concept is required']"
               label="Concept of Reward"
               align-left
             ></v-text-field>
@@ -110,7 +110,7 @@ export default {
           moneyTo: parseInt(this.money),
           passwordFrom: this.password,
           concept: this.conceptT,
-          uniReward: this.uniR
+          uniRewardId: this.uniR
         };
 
         const headers = {
