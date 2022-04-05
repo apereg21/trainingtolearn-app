@@ -19,10 +19,11 @@
           <v-row no-gutters>
             <v-select
               v-model="uniR"
-              :items="unirewards"
+              :items="rewardField"
               :rules="[(v) => !!v || 'UniReward is required']"
               label="UniReward linked to this UniPoints"
               align-left
+              v-on:click="getUsersID()"
             ></v-select>
           </v-row>
           <v-row no-gutters>
@@ -81,6 +82,7 @@ export default {
   name: "TransactionCreation",
   data: () => ({
     valid: true,
+    idUserTo:"",
     addFrom: "",
     addTo: "",
     money: 0,
@@ -98,8 +100,31 @@ export default {
   components: {
     ToolbarSpecial,
   },
-  computed: {},
+  computed: {
+    rewardField: function(){
+      return this.unirewards 
+    },
+
+  },
   methods: {
+    getUsersID(){
+      const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      };
+
+      axios
+        .get("http://localhost:3000/getUserID/:"+this.addTo, { headers })
+        .then((response) => {
+          console.log("Server response: " + response.data);
+          this.idUserTo = response.data;
+          this.getRewardsDatabase();
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(error);
+        });
+    },
     createTransaction() {
       if (this.$refs.form.validate() == true) {
         var postData;
@@ -162,11 +187,12 @@ export default {
       };
 
       axios
-        .get("http://localhost:3000/getAllRewardsList/:"+this.$store.state.idUser+"/:"+false, { headers })
+        .get("http://localhost:3000/getAllRewardsList/:"+this.idUserTo+"/:"+false, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
           this.unirewards = response.data;
           this.convertData(this.unirewards, 1);
+          
         })
         .catch((error) => {
           console.log(error);
@@ -204,7 +230,6 @@ export default {
   },
   mounted() {
     this.getUsersDatabase();
-    this.getRewardsDatabase();
     this.getUserUsername();
   },
 };
