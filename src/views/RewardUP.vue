@@ -150,12 +150,19 @@ export default {
           .then((response) => {
             console.log("Server response: " + response.data);
             alert(response.data);
+            this.goToMenu()
           })
           .catch((error) => {
             console.log(error);
             alert(error);
           });
       }
+    },
+    goToMenu: function () {
+      this.$router.push({
+        name: "Home",
+      });
+      
     },
     reset() {
       this.$refs.form.reset();

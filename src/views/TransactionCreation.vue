@@ -13,7 +13,7 @@
         <v-container grid-list-md />
         <v-container grid-list-md />
         <v-container grid-list-md />
-        <v-row no-gutters align="center" justify="center">
+        <v-row no-gutters align="center" justify="center" v-if="!(typeUs === 'N')">
           <v-btn color="#F7DB5E" v-on:click="clickRUP()">UniPoints</v-btn>
         </v-row>
         <v-container grid-list-md />
@@ -34,8 +34,11 @@ export default {
   components: {
     ToolbarSpecial,
   },
-  computed: {},
-
+  computed: {
+    typeUs(){
+      return this.$store.state.roleUser
+    }
+  },
   methods: {
     clickRUP() {
       this.$router.push({

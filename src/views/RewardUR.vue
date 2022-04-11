@@ -126,6 +126,7 @@ export default {
           .then((response) => {
             console.log("Server response: " + response.data);
             alert(response.data);
+            this.goToMenu();
           })
           .catch((error) => {
             console.log(error);
@@ -182,6 +183,11 @@ export default {
           this.unirewards[i] = vector[i].nameUR;
         }
       }
+    },
+    goToMenu: function () {
+      this.$router.push({
+        name: "Home",
+      }); 
     },
   },
   mounted() {

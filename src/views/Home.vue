@@ -9,7 +9,7 @@
 
         <v-btn
           class="ma-2"
-          v-if="!(isUser === '') && !(isUser === 'N')"
+          v-if="!(isUser === '') && !(typeUs === 'N')"
           color="#F7DB5E"
           v-on:click="clickNR()"
         >
