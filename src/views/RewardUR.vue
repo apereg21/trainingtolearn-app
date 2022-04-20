@@ -9,10 +9,11 @@
         <v-container>
           <v-row no-gutters>
             <v-text-field
-              v-model="money"
+              v-model="obtainCostUniReward"
               :rules="[(v) => !!v || 'UniPoints Field is required']"
               label="UniPoints to deliver"
               align-left
+              disabled
             ></v-text-field>
           </v-row>
           <v-row no-gutters>
@@ -76,12 +77,21 @@ export default {
     bodyRules: [(v) => !!v || "Data field is required"],
     users: [],
     unirewards: [],
+    costUniRewards: []
   }),
   props: {},
   components: {
     ToolbarSpecial,
   },
-  computed: {},
+  computed: {
+    obtainCostUniReward(){
+      console.log(this.uniR)
+      console.log(this.unirewards.indexOf(this.uniR))
+      var position = this.unirewards.indexOf(this.uniR)
+      console.log(this.costUniRewards[position])
+      return this.costUniRewards[this.unirewards.indexOf(this.uniR)]
+    }
+  },
   methods: {
     getUserUsername(){
         const headers = {
@@ -109,7 +119,7 @@ export default {
           toAddressUN: this.addFrom,
           typeT: "U",
           uniRewardT: this.uniR,
-          moneyTo: parseInt(this.money),
+          moneyTo: parseInt(this.obtainCostUniReward),
           passwordFrom: this.password,
           concept: "default",
         };
@@ -178,15 +188,16 @@ export default {
     convertData(vector, opc) {
       for (let i = 0; i < vector.length; i++) {
         if (opc == 0) {
-          this.users[i] = vector[i].username;
+          this.users[i] = vector[i].username
         } else {
-          this.unirewards[i] = vector[i].nameUR;
+          this.costUniRewards[i] = vector[i].cost
+          this.unirewards[i] = vector[i].nameUR
         }
       }
     },
     goToMenu: function () {
       this.$router.push({
-        name: "Home",
+        name: "Home"
       }); 
     },
   },
