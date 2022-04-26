@@ -111,7 +111,7 @@ export default {
         fullSurname: this.fullSurname,
         username: this.username,
         password: this.password,
-        roleUser: this.select.charAt(0)
+        typeUser: this.select.charAt(0)
       };
       
       const headers = {
