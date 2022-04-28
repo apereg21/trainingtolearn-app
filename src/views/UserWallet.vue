@@ -86,7 +86,7 @@ export default {
         .get("http://localhost:3000/getSpecificWallet/:" + this.$store.state.idUser, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
-          this.money = response.data[0].money.length;
+          this.money = response.data[0];
           if (response.data.length > 2) {
             this.unirewards = response.data[1];
             this.transactions = response.data[2];
