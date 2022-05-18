@@ -19,12 +19,22 @@
 
         <v-btn
           class="ma-2"
-          v-if="!(isUser === '')"
+          v-if="!(isUser === '') && !(typeUs === 'N')"
           color="#F7DB5E"
           v-on:click="clickNT()"
         >
-          New Reward
+          UniPoints Delivery
           <v-icon dark right> mdi-medal </v-icon>
+        </v-btn>
+
+        <v-btn
+          class="ma-2"
+          v-if="!(isUser === '')"
+          color="#F7DB5E"
+          v-on:click="clickSC()"
+        >
+          Course Status
+          <v-icon dark right> mdi-file-document-edit-outline  </v-icon>
         </v-btn>
 
         <v-spacer />
@@ -87,6 +97,11 @@ export default {
     clickMP: function () {
       this.$router.push({
         name: "MyProfile",
+      });
+    },
+    clickSC: function () {
+      this.$router.push({
+        name: "SmartContractState",
       });
     },
     refresh: function(){

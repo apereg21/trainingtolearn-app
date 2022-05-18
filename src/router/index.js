@@ -8,8 +8,8 @@ import MyProfile from "@/views/MyProfile";
 import UserProfile from "@/views/UserProfile";
 import UserWallet from "@/views/UserWallet";
 import RewardUP from "@/views/RewardUP";
-import RewardUR from "@/views/RewardUR";
 import UserRegistration from "@/views/UserRegistration";
+import SmartContractState from "@/views/SmartContractState";
 
 Vue.use(VueRouter)
 
@@ -54,14 +54,14 @@ const routes = [{
     component: RewardUP,
     props: true
 }, {
-    path: "/RewardUR",
-    name: "RewardUR",
-    component: RewardUR,
-    props: true
-}, {
     path: "/UserRegistration",
     name: "UserRegistration",
     component: UserRegistration,
+    props: true
+}, {
+    path: "/SmartContractState",
+    name: "SmartContractState",
+    component: SmartContractState,
     props: true
 }];
 
