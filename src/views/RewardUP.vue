@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import ToolbarSpecial from "@/components/ToolbarSpecialRW";
+import ToolbarSpecial from "@/components/ToolbarSpecial";
 const axios = require("axios");
 export default {
   name: "TransactionCreation",
@@ -104,7 +104,6 @@ export default {
     rewardField: function(){
       return this.unirewards 
     },
-
   },
   methods: {
     getUsersID(){
@@ -112,7 +111,6 @@ export default {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
-
       axios
         .get("http://localhost:3000/getUserID/:"+this.addTo, { headers })
         .then((response) => {
@@ -137,12 +135,10 @@ export default {
           concept: this.conceptT,
           uniRewardId: this.uniR
         };
-
         const headers = {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         };
-
         axios
           .post("http://localhost:3000/createNewTransaction", postData, {
             headers,
@@ -172,7 +168,6 @@ export default {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
-
       axios
         .get("http://localhost:3000/getAllUsersList", { headers })
         .then((response) => {
@@ -192,7 +187,6 @@ export default {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
-
       axios
         .get("http://localhost:3000/getAllRewardsList/:"+this.idUserTo+"/:"+false, { headers })
         .then((response) => {
@@ -220,7 +214,6 @@ export default {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         };
-
         axios
           .get("http://localhost:3000/getUsersName/:"+this.$store.state.idUser, {
             headers,

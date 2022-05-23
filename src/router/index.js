@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from "@/views/Home";
 import UserCreation from "@/views/UserCreation";
-import TransactionCreation from "@/views/TransactionCreation";
 import RewardCreation from "@/views/RewardCreation";
 import MyProfile from "@/views/MyProfile";
 import UserProfile from "@/views/UserProfile";
@@ -22,11 +21,6 @@ const routes = [{
     path: "/userCreation",
     name: "UserCreation",
     component: UserCreation,
-    props: true
-}, {
-    path: "/transacCreation",
-    name: "TransactionCreation",
-    component: TransactionCreation,
     props: true
 }, {
     path: "/RewardCreation",
