@@ -124,12 +124,20 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           alert(response.data)
+          if(response.data == "OK - Acount created"){
+            this.goLogin()
+          }
         })
         .catch((error) => {
           console.log(error);
           alert(error)
         });
       }
+    },
+    goLogin(){
+      this.$router.push({
+        name: "UserRegistration",
+      });
     },
     reset() {
       this.$refs.form.reset();

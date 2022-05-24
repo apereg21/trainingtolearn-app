@@ -189,22 +189,34 @@ export default {
         }
       }
 
-      const headers = {
+      if(postData.changes.length !=0){
+        const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-      };
+        };
 
       axios
         .post("http://localhost:3000/changeUserData", postData, {headers})
         .then((response) => {
           console.log("Server response: " + response.data);
           alert(response.data)
-          this.username=this.usnameN;
+          if(response.data == "User data changed"){
+            this.usName!= "" ? this.username=this.usnameN : console.log("Username not changed")
+            this.password!= "" ? this.password=this.passwordN : console.log("User password not changed")
+            this.name!= "" ? this.name=this.nameN : console.log("User name not changed")
+            this.fullsurname!= "" ?  this.fullsurname= this.fullsurnameN : console.log("User fullsurname not changed")
+            this.checkbox = false
+            this.visibility1 = true;
+            this.visibility2 = false;
+          }
         })
         .catch((error) => {
           console.log(error);
           alert(error)
         });
+      }else{
+        alert("Nothing changed");
+      }
     },
     findData() {
       const headers = {

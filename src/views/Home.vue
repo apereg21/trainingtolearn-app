@@ -2,7 +2,12 @@
   <v-app id="keep" class="white">
     <v-card color="white" height="60px">
       <v-toolbar color="#5B943D">
-        <v-btn v-if="(isUser === '')" class="ma-2" color="#F7DB5E" v-on:click="clickNA()">
+        <v-btn
+          v-if="isUser === ''"
+          class="ma-2"
+          color="#F7DB5E"
+          v-on:click="clickNA()"
+        >
           Register/Log In
           <v-icon dark right> mdi-account-plus </v-icon>
         </v-btn>
@@ -34,7 +39,7 @@
           v-on:click="clickSC()"
         >
           Course Status
-          <v-icon dark right> mdi-file-document-edit-outline  </v-icon>
+          <v-icon dark right> mdi-file-document-edit-outline </v-icon>
         </v-btn>
 
         <v-spacer />
@@ -43,7 +48,7 @@
           class="ma-2"
           v-if="!(isUser === '')"
           color="#F7DB5E"
-          v-on:click="refresh()"
+          v-on:click="logout()"
         >
           Logout
           <v-icon dark right> mdi-account-minus </v-icon>
@@ -51,13 +56,12 @@
 
         <v-btn
           class="ma-2"
-          v-if="!( isUser === '')"
+          v-if="!(isUser === '')"
           v-on:click="clickMP()"
           color="#F7DB5E"
         >
           My Profile
           <v-icon dark right> mdi-account-circle </v-icon>
-          
         </v-btn>
       </v-toolbar>
     </v-card>
@@ -65,18 +69,18 @@
 </template>
 
 <script>
+const axios = require("axios");
 export default {
   name: "Home",
   data: () => ({}),
-  props: {
-  },
+  props: {},
   computed: {
-    isUser(){
-      return this.$store.state.idUser
+    isUser() {
+      return this.$store.state.idUser;
     },
-    typeUs(){
-      return this.$store.state.roleUser
-    }
+    typeUs() {
+      return this.$store.state.roleUser;
+    },
   },
   methods: {
     clickNA: function () {
@@ -86,7 +90,7 @@ export default {
     },
     clickNT: function () {
       this.$router.push({
-        name: "TransactionCreation",
+        name: "RewardUP",
       });
     },
     clickNR: function () {
@@ -104,14 +108,29 @@ export default {
         name: "SmartContractState",
       });
     },
-    refresh: function(){
-        this.$store.commit("SET_IDUSER","")
-        this.$router.push({
-        name: "Home",
-      });
-    }
+    logout: function () {
+      
+      if (confirm("Are you sure you want to logout?")) {
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        };
+        axios
+          .get(
+            "http://localhost:3000/getUsersName/:" + this.$store.state.idUser,
+            { headers }
+          )
+          .then((response) => {
+            alert("Goodbye Mr/Mrs " + response.data);
+            this.$store.commit("SET_IDUSER", "");
+          })
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+      }
+    },
   },
-  mounted: function(){
-  }
+  mounted: function () {},
 };
 </script>

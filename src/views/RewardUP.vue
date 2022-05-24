@@ -146,7 +146,10 @@ export default {
           .then((response) => {
             console.log("Server response: " + response.data);
             alert(response.data);
-            this.goToMenu()
+            if(response.data=="OK - Delivery complete"){
+              this.goToMenu()
+            }
+            
           })
           .catch((error) => {
             console.log(error);

@@ -114,7 +114,7 @@ export default {
             headers,
           })
           .then((response) => {
-            console.log("Server response: " + response.data)
+            console.log("The name is: " + response.data)
             this.username = response.data
           })
           .catch((error) => {
@@ -133,6 +133,7 @@ export default {
         password: this.password,
         usernameCourse: this.userCourse,
       };
+      console.log(this.username)
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
@@ -143,8 +144,9 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           alert(response.data);
-          
-          this.goHome();
+          if(response.data == "OK - Reward will be created"){
+            this.goHome();
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -182,7 +184,7 @@ export default {
       this.$router.push({
         name: "Home",
       });
-    },
+    }
   },
   mounted() {
     this.getUsersDatabase();

@@ -54,13 +54,23 @@ export default {
         .get("http://localhost:3000/getAllSmartContractsUser/:" + this.$store.state.idUser, { headers })
         .then((response) => {
           console.log("Server response a this petition: " + response.data);
-          console.log(response.data[0].walletIdDemander)
-          this.sContracts=response.data
+          if(response.data!= ""){
+            console.log(response.data[0].walletIdDemander)
+            this.sContracts=response.data
+          }else{
+            alert("No course localized. Return to the home page")
+            this.goHome()
+          }
         })
         .catch((error) => {
           console.log(error);
           alert(error);
         });
+    },
+    goHome(){
+      this.$router.push({
+        name: "Home",
+      });
     }
   },
   mounted() {

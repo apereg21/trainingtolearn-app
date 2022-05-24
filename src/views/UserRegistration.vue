@@ -102,19 +102,26 @@ export default {
           .post("http://localhost:3000/loginUser", postData, { headers })
           .then((response) => {
             if (!isNaN(response.data)) {
-              alert("Welcome to the plataform Mr/Mrs");
               this.$store.commit("SET_IDUSER", response.data);
               axios
-                .get("http://localhost:3000/getUserRole/:"+this.$store.state.idUser, { headers })
+                .get("http://localhost:3000/getUsersName/:"+this.$store.state.idUser, { headers })
                 .then((response2) => {
-                  this.$store.commit("SET_ROLE", response2.data);
-                  this.goToHome();
+                  alert("Welcome to the platform Mr/Mrs " + response2.data)
+                  axios
+                  .get("http://localhost:3000/getUserRole/:"+this.$store.state.idUser, { headers })
+                  .then((response3) => {
+                    this.$store.commit("SET_ROLE", response3.data);
+                    this.goToHome()
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    alert(error);
+                  }); 
                 })
                 .catch((error) => {
                   console.log(error);
                   alert(error);
-                });
-              
+                }); 
             } else {
               alert(response.data);
             }
