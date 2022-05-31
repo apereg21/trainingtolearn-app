@@ -143,7 +143,7 @@ export default {
     changeData() {
       var postData = {
         "usernameN": this.usnameN,
-        "passwordN": this.uspass,
+        "passwordN": this.uspassN,
         "fullSurnameN": this.fullsurnameN,
         "nameN": this.nameN,
         "username": this.usname,
@@ -189,6 +189,8 @@ export default {
         }
       }
 
+      console.log(postData.changes)
+
       if(postData.changes.length !=0){
         const headers = {
         "Content-Type": "application/json",
@@ -201,10 +203,10 @@ export default {
           console.log("Server response: " + response.data);
           alert(response.data)
           if(response.data == "User data changed"){
-            this.usName!= "" ? this.username=this.usnameN : console.log("Username not changed")
-            this.password!= "" ? this.password=this.passwordN : console.log("User password not changed")
-            this.name!= "" ? this.name=this.nameN : console.log("User name not changed")
-            this.fullsurname!= "" ?  this.fullsurname= this.fullsurnameN : console.log("User fullsurname not changed")
+            this.usName!=this.usnameN ? this.usname=this.usnameN : console.log("Username not changed")
+            this.password!=this.uspassN ? this.uspass=this.uspassN : console.log("User password not changed")
+            this.name!=this.nameN ? this.name=this.nameN : console.log("User name not changed")
+            this.fullsurname!=this.fullsurnameN ?  this.fullsurname= this.fullsurnameN : console.log("User fullsurname not changed")
             this.checkbox = false
             this.visibility1 = true;
             this.visibility2 = false;
@@ -226,22 +228,34 @@ export default {
       axios
         .get("http://localhost:3000/getSpecificUser/:" + this.$store.state.idUser, { headers })
         .then((response) => {
-          console.log("Server response: " + response.data);
-          this.name = response.data.name;
-          this.uspass = response.data.password;
-          this.fullsurname = response.data.fullSurname;
-          this.usname = response.data.username;
-          if (response.data.typeUser == "I") {
-            this.typeuser = "Instructor";
-          } else {
-            this.typeuser = "Normal User";
+          console.log(response.data)
+          if(response.data != "User data don't loaded - Reason: No user to load data"){
+            console.log("Server response: " + response.data);
+            this.name = response.data.name;
+            this.uspass = response.data.password;
+            this.fullsurname = response.data.fullSurname;
+            this.usname = response.data.username;
+            if (response.data.typeUser == "I") {
+              this.typeuser = "Instructor";
+            } else {
+              this.typeuser = "Normal User";
+            }
+          }else{
+            alert(response.data)
+            this.goHome()
           }
         })
         .catch((error) => {
           console.log(error);
           alert(error);
         });
+    },
+    goHome() {
+      this.$router.push({
+        name: "Home",
+      });
     }
   }
+  
 };
 </script>

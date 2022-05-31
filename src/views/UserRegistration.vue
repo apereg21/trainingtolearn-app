@@ -103,20 +103,16 @@ export default {
           .then((response) => {
             if (!isNaN(response.data)) {
               this.$store.commit("SET_IDUSER", response.data);
+              this.$store.commit("SET_PASSWORD", this.password);
               axios
-                .get("http://localhost:3000/getUsersName/:"+this.$store.state.idUser, { headers })
+                .get("http://localhost:3000/getUserRole/:"+this.$store.state.idUser, { headers })
                 .then((response2) => {
-                  alert("Welcome to the platform Mr/Mrs " + response2.data)
-                  axios
-                  .get("http://localhost:3000/getUserRole/:"+this.$store.state.idUser, { headers })
-                  .then((response3) => {
-                    this.$store.commit("SET_ROLE", response3.data);
-                    this.goToHome()
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                    alert(error);
-                  }); 
+                  var username = this.username
+                  var typUser = response2.data
+                  console.log(username + this.password + typUser)
+                  alert("Welcome to the platform Mr/Mrs " + username)
+                  this.$store.commit("SET_ROLE", typUser);
+                  this.goToHome()
                 })
                 .catch((error) => {
                   console.log(error);

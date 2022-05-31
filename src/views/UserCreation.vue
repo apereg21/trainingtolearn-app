@@ -110,7 +110,7 @@ export default {
         name: this.name,
         fullSurname: this.fullSurname,
         username: this.username,
-        password: this.password,
+        password: this.$store.state.password,
         typeUser: this.select.charAt(0)
       };
       

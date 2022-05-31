@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         idUser: "",
-        roleUser: ""
+        roleUser: "",
+        password: ""
     },
     mutations: {
         SET_IDUSER: (state, idUser) => {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
         },
         SET_ROLE: (state, roleUser) => {
             state.roleUser = roleUser
+        },
+        SET_PASSWORD: (state, password) => {
+            state.password = password
         }
     },
     actions: {},

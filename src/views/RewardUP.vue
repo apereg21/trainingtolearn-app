@@ -131,7 +131,7 @@ export default {
           toAddressUN: this.addTo,
           typeT: "M",
           moneyTo: parseInt(this.money),
-          passwordFrom: this.password,
+          password: this.$store.state.password,
           concept: this.conceptT,
           uniRewardId: this.uniR
         };

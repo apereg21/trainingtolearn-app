@@ -130,7 +130,7 @@ export default {
         imageUR: this.imageUR,
         costReward: parseInt(this.costReward),
         username: this.username,
-        password: this.password,
+        password: this.$store.state.password,
         usernameCourse: this.userCourse,
       };
       console.log(this.username)
