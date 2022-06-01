@@ -1,6 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
+    <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="800" height="525">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> Course Form </v-toolbar-title>
@@ -70,6 +71,9 @@ const axios = require("axios");
 export default {
   name: "RewardCreation",
   data: () => ({
+    alert: false,
+    typeAlert: "",
+    textAlert: "",
     valid: true,
     name: "",
     descriptionUR: "",
@@ -91,54 +95,69 @@ export default {
   computed: {},
 
   methods: {
-    getUserUsername(){
-        const headers = {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        };
-
-        axios
-          .get("http://localhost:3000/getUsersName/:"+this.$store.state.idUser, {
-            headers,
-          })
-          .then((response) => {
-            console.log("The name is: " + response.data)
-            this.username = response.data
-          })
-          .catch((error) => {
-            console.log(error);
-            alert(error);
-          });
-    },
-    createReward() {
-      this.$refs.form.validate();
-      var postData = {
-        nameUR: this.name,
-        descriptionUR: this.descriptionUR,
-        imageUR: this.imageUR,
-        costReward: parseInt(this.costReward),
-        username: this.username,
-        password: this.$store.state.password,
-        usernameCourse: this.userCourse,
-      };
-      console.log(this.username)
+    getUserUsername() {
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
 
       axios
-        .post("http://localhost:3000/createNewReward", postData, { headers })
-        .then((response) => {
-          console.log("Server response: " + response.data);
-          alert(response.data);
-          if(response.data == "OK - Reward will be created"){
-            this.goHome();
+        .get(
+          "http://localhost:3000/getUsersName/:" + this.$store.state.idUser,
+          {
+            headers,
           }
+        )
+        .then((response) => {
+          console.log("The name is: " + response.data);
+          this.username = response.data;
         })
         .catch((error) => {
           console.log(error);
+          alert(error);
         });
+    },
+    createReward() {
+      this.alert = false;
+      if (this.$refs.form.validate() && this.users.length > 0) {
+        var postData = {
+          nameUR: this.name,
+          descriptionUR: this.descriptionUR,
+          imageUR: this.imageUR,
+          costReward: parseInt(this.costReward),
+          username: this.username,
+          password: this.$store.state.password,
+          usernameCourse: this.userCourse,
+        };
+        console.log(this.username);
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        };
+
+        axios
+          .post("http://localhost:3000/createNewReward", postData, { headers })
+          .then((response) => {
+            console.log("Server response: " + response.data);
+            if (response.data == "OK - Reward will be created") {
+              this.textAlert = response.data;
+              this.typeAlert = "success";
+              this.alert = true;
+              this.goHome();
+            }else{
+              this.textAlert = response.data;
+              this.typeAlert = "error";
+              this.alert = true;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        this.textAlert = "You need to fill all the fields";
+        this.typeAlert = "warning";
+        this.alert = true;
+      }
     },
     getUsersDatabase() {
       const headers = {
@@ -151,7 +170,7 @@ export default {
         .then((response) => {
           console.log("Server response: " + response.data);
           this.users = response.data;
-          this.users.splice(parseInt(this.$store.state.idUser)-1,1)
+          this.users.splice(parseInt(this.$store.state.idUser) - 1, 1);
           this.users.splice(0, 1);
           this.convertData(this.users, 0);
         })
@@ -169,10 +188,12 @@ export default {
       this.$refs.form.reset();
     },
     goHome() {
-      this.$router.push({
-        name: "Home",
-      });
-    }
+      setTimeout(() => {
+        this.$router.push({
+          name: "Home"
+        });
+      }, 950);
+    },
   },
   mounted() {
     this.getUsersDatabase();

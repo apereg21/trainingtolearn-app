@@ -1,9 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
-    <v-alert :type="typeAlert" v-if="alert" dismissible>{{
-              textAlert
-    }}</v-alert>
+    <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="800" height="300">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> User Form </v-toolbar-title>
@@ -82,15 +80,18 @@ export default {
   methods: {
     goToRegistration: function () {
       this.$router.push({
-        name: "UserCreation"
+        name: "UserCreation",
       });
     },
     goToHome: function () {
-      this.$router.push({
-        name: "Home"
-      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "Home"
+        });
+      }, 950);
     },
     loginUser() {
+      this.alert = false;
       if (this.$refs.form.validate() == true) {
         var postData = {
           username: this.username,
@@ -109,34 +110,45 @@ export default {
               this.$store.commit("SET_IDUSER", response.data);
               this.$store.commit("SET_PASSWORD", this.password);
               axios
-                .get("http://localhost:3000/getUserRole/:"+this.$store.state.idUser, { headers })
+                .get(
+                  "http://localhost:3000/getUserRole/:" +
+                    this.$store.state.idUser,
+                  { headers }
+                )
                 .then((response2) => {
-                  var username = this.username
-                  var typUser = response2.data
-                  console.log(username + this.password + typUser)
-                  this.textAlert = "Welcome to the platform Mr/Mrs " + username
+                  var username = this.username;
+                  var typUser = response2.data;
+                  console.log(username + this.password + typUser);
+                  this.textAlert = "Welcome to the platform Mr/Mrs " + username;
                   this.typeAlert = "success";
                   this.alert = true;
                   this.$store.commit("SET_ROLE", typUser);
-                  this.goToHome()
+                  this.goToHome();
                 })
                 .catch((error) => {
                   console.log(error);
                   alert(error);
-                }); 
+                });
             } else {
-              alert(response.data);
+              this.textAlert = response.data;
+              this.typeAlert = "error";
+              this.alert = true;
             }
           })
           .catch((error) => {
             console.log(error);
             alert(error);
           });
+      } else {
+        this.textAlert = "You need to fill all the fields";
+        this.typeAlert = "warning";
+        this.alert = true;
       }
     },
     reset() {
       this.$refs.form.reset();
-    },
+    }
   },
+  
 };
 </script>

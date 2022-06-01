@@ -1,6 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecialPW />
+    <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="1000" height="800">
       <v-toolbar color="#5B943D">
         <v-toolbar-title >
@@ -51,6 +52,9 @@ const axios = require("axios");
 export default {
   name: "UserWallet",
   data: () => ({
+    textAlert: "",
+    typeAlert : "",
+    alert : false,
     unirewards: [],
     transactions: [],
     money: 0,
@@ -77,6 +81,13 @@ export default {
     this.getUserWalletData()
   },
   methods: {
+    goHome() {
+      setTimeout(() => {
+        this.$router.push({
+          name: "Home",
+        });
+      }, 950);
+    },
     getUserWalletData() {
       const headers = {
         "Content-Type": "application/json",
@@ -86,12 +97,19 @@ export default {
         .get("http://localhost:3000/getSpecificWallet/:" + this.$store.state.idUser, { headers })
         .then((response) => {
           console.log("Server response: " + response.data);
-          this.money = response.data[0];
+          if(response.data!="User data don't loaded - Reason: No user to load data"){
+            this.money = response.data[0];
           if (response.data.length > 2) {
             this.unirewards = response.data[1];
             this.transactions = response.data[2];
           } else {
             this.transactions = response.data[1];
+          }
+          }else{
+            this.textAlert = "Can't load user data, returning to principal menu";
+            this.typeAlert = "error";
+            this.alert = true;
+            this.goHome();
           }
         })
         .catch((error) => {

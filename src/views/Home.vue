@@ -65,6 +65,52 @@
         </v-btn>
       </v-toolbar>
     </v-card>
+    <div class="text-center">
+      <v-dialog v-model="dialog" max-width="350">
+        <v-card>
+          <v-card-title class="text-h5">
+            Are you sure of logout from plataform?
+          </v-card-title>
+
+          <v-card-text>
+            Select one of the options below
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+              color="green darken-1"
+              text
+              @click="dialog = false"
+              v-on:click="click(false)"
+            >
+              Disagree
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              @click="dialog = false"
+              v-on:click="click(true)"
+            >
+              Agree
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+       <v-dialog v-model="dialog2" max-width="400">
+        <v-card>
+          <v-card-title class="text-h5">
+            Logout from the platform
+          </v-card-title>
+          <v-card-text class="text-h6">
+            Okay Mr/Mrs {{username}}, see you next time!
+          </v-card-text>
+
+        </v-card>
+      </v-dialog>
+    </div>
   </v-app>
 </template>
 
@@ -72,7 +118,11 @@
 const axios = require("axios");
 export default {
   name: "Home",
-  data: () => ({}),
+  data: () => ({
+    dialog: false,
+    dialog2: false,
+    username:""
+  }),
   props: {},
   computed: {
     isUser() {
@@ -108,27 +158,42 @@ export default {
         name: "SmartContractState",
       });
     },
-    logout: function () {
-      
-      if (confirm("Are you sure you want to logout?")) {
-        const headers = {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        };
-        axios
-          .get(
-            "http://localhost:3000/getUsersName/:" + this.$store.state.idUser,
-            { headers }
-          )
-          .then((response) => {
-            alert("Goodbye Mr/Mrs " + response.data);
-            this.$store.commit("SET_IDUSER", "");
-          })
-          .catch((error) => {
-            console.log(error);
-            alert(error);
-          });
+    click: function (opc) {
+      if (opc == true) {
+        setTimeout(() => {
+          this.theLogOutFunction();
+              setTimeout(() => {
+              this.dialog2 = false
+            }, 1500);
+        }, 250);
       }
+    },
+    logout: function () {
+      this.dialog = true;
+    },
+    theLogOutFunction() {
+      const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      };
+      axios
+        .get(
+          "http://localhost:3000/getUsersName/:" + this.$store.state.idUser,
+          { headers }
+        )
+        .then((response) => {
+          this.username= response.data
+          this.dialog = false;
+          this.dialog2 = true
+          console.log(response);
+          this.$store.commit("SET_IDUSER", "");
+          this.$store.commit("SET_PASSWORD", "");
+          this.$store.commit("SET_ROLE", "");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(error);
+        });
     },
   },
   mounted: function () {},

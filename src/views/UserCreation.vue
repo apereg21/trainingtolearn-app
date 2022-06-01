@@ -1,6 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
+    <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="800" height="600">
       <v-toolbar color="#5B943D">
         <v-toolbar-title>
@@ -84,6 +85,9 @@ const axios = require("axios");
 export default {
   name: "UserCreation",
   data: () => ({
+    alert: false,
+    typeAlert: "",
+    textAlert: "",
     valid: true,
     show:false,
     select:"",  
@@ -110,7 +114,7 @@ export default {
         name: this.name,
         fullSurname: this.fullSurname,
         username: this.username,
-        password: this.$store.state.password,
+        password: this.password,
         typeUser: this.select.charAt(0)
       };
       
@@ -122,22 +126,34 @@ export default {
       axios
         .post("http://localhost:3000/createNewUser", postData, {headers})
         .then((response) => {
+          this.alert = false
           console.log("Server response: " + response.data);
-          alert(response.data)
+          this.textAlert = response.data
           if(response.data == "OK - Acount created"){
+            this.typeAlert = "success"
+            this.alert=true
             this.goLogin()
+          }else{
+            this.typeAlert = "error"
+            this.alert=true
           }
         })
         .catch((error) => {
           console.log(error);
           alert(error)
         });
+      }else{
+        this.textAlert = "You need to fill all the fields"
+        this.typeAlert = "warning"
+        this.alert=true
       }
     },
     goLogin(){
-      this.$router.push({
-        name: "UserRegistration",
-      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "UserRegistration"
+        });
+      }, 950);
     },
     reset() {
       this.$refs.form.reset();

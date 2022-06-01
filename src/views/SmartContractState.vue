@@ -1,6 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
+    <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="1200" height="450">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> State of Courses </v-toolbar-title>
@@ -28,6 +29,9 @@ const axios = require("axios");
 export default {
   name: "SmartcontractState",
   data: () => ({
+    alert: false,
+    typeAlert: "",
+    textAlert: "",
     sContracts:[],
     headers: [
       { text: "Name of UniReward", value: "nameUR"},
@@ -58,7 +62,9 @@ export default {
             console.log(response.data[0].walletIdDemander)
             this.sContracts=response.data
           }else{
-            alert("No course localized. Return to the home page")
+            this.textAlert = "No course localized. Return to the home page";
+            this.typeAlert = "info";
+            this.alert = true;
             this.goHome()
           }
         })
@@ -68,9 +74,11 @@ export default {
         });
     },
     goHome(){
-      this.$router.push({
-        name: "Home",
-      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "Home"
+        });
+      }, 950);
     }
   },
   mounted() {

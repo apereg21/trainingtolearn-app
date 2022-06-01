@@ -1,68 +1,53 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecialPW />
+    <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="800" height="725">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> My Profile </v-toolbar-title>
       </v-toolbar>
       <v-container fuild v-if="visibility1">
-        <v-text-field 
-          v-model="name" 
-          label="Name" 
-          disabled 
-          outlined 
-          readonly>
+        <v-text-field v-model="name" label="Name" disabled outlined readonly>
         </v-text-field>
         <v-text-field
           v-model="fullsurname"
           label="Full Surname"
           disabled
           outlined
-          readonly>
+          readonly
+        >
         </v-text-field>
         <v-text-field
           v-model="usname"
           label="Username"
           disabled
           outlined
-          readonly>
+          readonly
+        >
         </v-text-field>
         <v-text-field
           v-model="uspass"
           label="Password"
           disabled
           outlined
-          readonly>
+          readonly
+        >
         </v-text-field>
         <v-text-field
           v-model="typeuser"
           label="Type of User"
           disabled
           outlined
-          readonly>
+          readonly
+        >
         </v-text-field>
       </v-container>
       <v-container fuild v-if="visibility2">
-        <v-text-field
-          v-model="nameN"
-          label="New Name"
-          >
+        <v-text-field v-model="nameN" label="New Name"> </v-text-field>
+        <v-text-field v-model="fullsurnameN" label="New Full Surname">
         </v-text-field>
-        <v-text-field
-          v-model="fullsurnameN"
-          label="New Full Surname"
-          >
-        </v-text-field>
-        <v-text-field
-          v-model="usnameN"
-          label="New UserName"
-          >
-        </v-text-field>
-        <v-text-field
-          v-model="uspassN"
-          label="New Password"
-          >
-        </v-text-field>
+        <v-text-field v-model="usnameN" label="New UserName"> </v-text-field>
+        <v-text-field v-model="uspassN" label="New Password"> </v-text-field>
         <v-row no-gutters>
           <v-col align="center" justify="center">
             <v-btn color="#F7DB5E" v-if="visibility2" v-on:click="changeData()"
@@ -73,12 +58,11 @@
       </v-container>
       <v-container fuild>
         <v-row no-gutters justify="center">
-            <v-checkbox
-             
-              v-model="checkbox"
-              label="Do you want to change Data?"
-              v-on:click="activateFields()"
-            />
+          <v-checkbox
+            v-model="checkbox"
+            label="Do you want to change Data?"
+            v-on:click="activateFields()"
+          />
         </v-row>
       </v-container>
     </v-card>
@@ -91,6 +75,9 @@ const axios = require("axios");
 export default {
   name: "UserProfile",
   data: () => ({
+    alert: false,
+    typeAlert: "",
+    textAlert: "",
     id: "",
     userData: [],
 
@@ -110,10 +97,8 @@ export default {
     visibility1: true,
     visibility2: false,
   }),
-  
-  props: {
 
-  },
+  props: {},
 
   components: {
     ToolbarSpecialPW,
@@ -121,117 +106,147 @@ export default {
   computed: {
     idUser() {
       return this.$store.state.idUser;
-    }    
+    },
   },
-  mounted: function(){
-    this.findData()
+  mounted: function () {
+    this.findData();
   },
   methods: {
     activateFields() {
       if (this.checkbox == true) {
         this.visibility1 = false;
         this.visibility2 = true;
-        this.nameN= this.name;
-        this.uspassN= this.uspass;
-        this.fullsurnameN= this.fullsurname;
-        this.usnameN= this.usname;
+        this.nameN = this.name;
+        this.uspassN = this.uspass;
+        this.fullsurnameN = this.fullsurname;
+        this.usnameN = this.usname;
       } else {
         this.visibility1 = true;
         this.visibility2 = false;
-      } 
+      }
     },
     changeData() {
       var postData = {
-        "usernameN": this.usnameN,
-        "passwordN": this.uspassN,
-        "fullSurnameN": this.fullsurnameN,
-        "nameN": this.nameN,
-        "username": this.usname,
-        "password": this.uspass,
-        "changes": []
+        usernameN: this.usnameN,
+        passwordN: this.uspassN,
+        fullSurnameN: this.fullsurnameN,
+        nameN: this.nameN,
+        username: this.usname,
+        password: this.uspass,
+        changes: [],
       };
 
       for (var key in postData) {
         var value = postData[key];
-        if((value.length > 0 && value != null) && (value!="changes" ||value!="username" || value!="password")){
-          console.log(key)
+        if (
+          value.length > 0 &&
+          value != null &&
+          (value != "changes" || value != "username" || value != "password")
+        ) {
+          console.log(key);
           switch (key) {
-            case 'usernameN':
-              if(postData[key]!=this.usname){
-                postData.changes.push("u")
-              }else{
+            case "usernameN":
+              if (postData[key] != this.usname) {
+                postData.changes.push("u");
+              } else {
                 delete postData[key];
-              }    
-            break;
-            case 'passwordN':
-             if(postData[key]!=this.uspass){
-                postData.changes.push("p")
-              }else{
+              }
+              break;
+            case "passwordN":
+              if (postData[key] != this.uspass) {
+                postData.changes.push("p");
+              } else {
                 delete postData[key];
-              } 
-            break;
-            case 'fullSurnameN':
-              if(postData[key]!=this.fullsurname){
-                postData.changes.push("f")
-              }else{
+              }
+              break;
+            case "fullSurnameN":
+              if (postData[key] != this.fullsurname) {
+                postData.changes.push("f");
+              } else {
                 delete postData[key];
-              } 
-            break;
-            case 'nameN':
-              if(postData[key]!=this.name){
-                postData.changes.push("n")
-              }else{
+              }
+              break;
+            case "nameN":
+              if (postData[key] != this.name) {
+                postData.changes.push("n");
+              } else {
                 delete postData[key];
-              } 
-            break;
+              }
+              break;
             default:
           }
         }
       }
 
-      console.log(postData.changes)
+      console.log(postData.changes);
 
-      if(postData.changes.length !=0){
+      if (postData.changes.length != 0) {
         const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         };
 
-      axios
-        .post("http://localhost:3000/changeUserData", postData, {headers})
-        .then((response) => {
-          console.log("Server response: " + response.data);
-          alert(response.data)
-          if(response.data == "User data changed"){
-            this.usName!=this.usnameN ? this.usname=this.usnameN : console.log("Username not changed")
-            this.password!=this.uspassN ? this.uspass=this.uspassN : console.log("User password not changed")
-            this.name!=this.nameN ? this.name=this.nameN : console.log("User name not changed")
-            this.fullsurname!=this.fullsurnameN ?  this.fullsurname= this.fullsurnameN : console.log("User fullsurname not changed")
-            this.$store.commit("SET_PASSWORD", this.uspass);
-            console.log(this.$store.state.password)
-            this.checkbox = false
-            this.visibility1 = true;
-            this.visibility2 = false;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(error)
-        });
-      }else{
-        alert("Nothing changed");
+        axios
+          .post("http://localhost:3000/changeUserData", postData, { headers })
+          .then((response) => {
+            console.log("Server response: " + response.data);
+            this.textAlert = response.data;
+            if (response.data == "User data changed") {
+              this.usName != this.usnameN
+                ? (this.usname = this.usnameN)
+                : console.log("Username not changed");
+              this.password != this.uspassN
+                ? (this.uspass = this.uspassN)
+                : console.log("User password not changed");
+              this.name != this.nameN
+                ? (this.name = this.nameN)
+                : console.log("User name not changed");
+              this.fullsurname != this.fullsurnameN
+                ? (this.fullsurname = this.fullsurnameN)
+                : console.log("User fullsurname not changed");
+              this.$store.commit("SET_PASSWORD", this.uspass);
+              console.log(this.$store.state.password);
+              this.typeAlert = "success";
+              this.alert = true;
+              this.sleep(950)
+              this.checkbox = false;
+              this.visibility1 = true;
+              this.visibility2 = false;
+            } else {
+              this.typeAlert = "error";
+              this.alert = true;
+              this.sleep(950)
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+      } else {
+        this.textAlert = "Nothing changed";
+        this.typeAlert = "info";
+        this.alert = true;
+        this.sleep(950)
       }
     },
     findData() {
+      this.alert = false;
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
       axios
-        .get("http://localhost:3000/getSpecificUser/:" + this.$store.state.idUser, { headers })
+        .get(
+          "http://localhost:3000/getSpecificUser/:" + this.$store.state.idUser,
+          { headers }
+        )
         .then((response) => {
-          console.log(response.data)
-          if(response.data != "User data don't loaded - Reason: No user to load data"){
+          console.log(response.data);
+          this.textAlert = response.data;
+          if (
+            response.data !=
+            "User data don't loaded - Reason: No user to load data"
+          ) {
             console.log("Server response: " + response.data);
             this.name = response.data.name;
             this.uspass = response.data.password;
@@ -242,9 +257,10 @@ export default {
             } else {
               this.typeuser = "Normal User";
             }
-          }else{
-            alert(response.data)
-            this.goHome()
+          } else {
+            this.typeAlert = "error";
+            this.alert = true;
+            this.goHome();
           }
         })
         .catch((error) => {
@@ -253,11 +269,17 @@ export default {
         });
     },
     goHome() {
-      this.$router.push({
-        name: "Home",
-      });
+      setTimeout(() => {
+        this.$router.push({
+          name: "Home",
+        });
+      }, 950);
+    },
+    sleep(seconds) {
+      setTimeout(() => {
+          this.alert = false;
+        }, seconds);
     }
-  }
-  
+  },
 };
 </script>

@@ -1,6 +1,7 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
+    <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="1200" height="600">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> Reward Of UniPoints </v-toolbar-title>
@@ -72,7 +73,6 @@ export default {
   data: () => ({
     valid: true,
     idUserTo:"",
-    addFrom: "",
     addTo: "",
     money: 0,
     uniR: "",
@@ -84,6 +84,9 @@ export default {
     bodyRules: [(v) => !!v || "Data field is required"],
     users: [],
     unirewards: [],
+    alert: false,
+    typeAlert: "",
+    textAlert: "",
   }),
   props: {},
   components: {
@@ -134,9 +137,14 @@ export default {
           })
           .then((response) => {
             console.log("Server response: " + response.data);
-            alert(response.data);
+            this.textAlert = response.data;
             if(response.data=="OK - Delivery complete"){
+              this.typeAlert = "warning";
+              this.alert = true;
               this.goToMenu()
+            }else{
+              this.typeAlert = "error";
+              this.alert = true;
             }
             
           })
@@ -144,19 +152,24 @@ export default {
             console.log(error);
             alert(error);
           });
+      }else{
+        this.textAlert = "You need to fill all the fields";
+        this.typeAlert = "warning";
+        this.alert = true;
       }
     },
     goToMenu: function () {
-      this.$router.push({
-        name: "Home",
-      });
-      
+     setTimeout(() => {
+        this.$router.push({
+          name: "Home"
+        });
+      }, 950);
     },
     reset() {
       this.$refs.form.reset();
     },
     getUsersDatabase() {
-      const headers = {
+        const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
@@ -173,8 +186,10 @@ export default {
           console.log(error);
           alert(error);
         });
+      
     },
     getRewardsDatabase() {
+      if(this.addTo!=""){
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
@@ -191,6 +206,11 @@ export default {
           console.log(error);
           alert(error);
         });
+      }else{
+        this.textAlert = "You need to fill all the fields";
+        this.typeAlert = "warning";
+        this.alert = true;
+      }
     },
     convertData(vector, opc) {
       for (let i = 0; i < vector.length; i++) {
