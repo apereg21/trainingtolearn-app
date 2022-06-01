@@ -42,17 +42,6 @@
               align-left
             ></v-text-field>
           </v-row>
-          <v-row no-gutters>
-            <v-text-field
-              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show ? 'text' : 'password'"
-              name="input-10-2"
-              label="Password User"
-              v-model="password"
-              class="input-group--focused"
-              @click:append="show = !show"
-            ></v-text-field>
-          </v-row>
           <v-row>
             <v-col align="center" justify="center">
               <v-btn

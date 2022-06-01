@@ -1,6 +1,9 @@
 <template>
   <v-app id="keep" class="white">
     <ToolbarSpecial />
+    <v-alert :type="typeAlert" v-if="alert" dismissible>{{
+              textAlert
+    }}</v-alert>
     <v-card class="justify-center mx-auto my-5" width="800" height="300">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> User Form </v-toolbar-title>
@@ -63,6 +66,9 @@ export default {
     show: false,
     username: "",
     password: "",
+    alert: false,
+    typeAlert: "",
+    textAlert: "",
     bodyRules: [
       (v) => !!v || "Data field is required",
       (v) => (v && v.length >= 3) || "Name must be less than 3 characters",
@@ -108,7 +114,9 @@ export default {
                   var username = this.username
                   var typUser = response2.data
                   console.log(username + this.password + typUser)
-                  alert("Welcome to the platform Mr/Mrs " + username)
+                  this.textAlert = "Welcome to the platform Mr/Mrs " + username
+                  this.typeAlert = "success";
+                  this.alert = true;
                   this.$store.commit("SET_ROLE", typUser);
                   this.goToHome()
                 })

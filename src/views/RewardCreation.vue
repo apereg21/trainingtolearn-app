@@ -33,16 +33,6 @@
             ></v-text-field>
           </v-row>
           <v-row no-gutters>
-              <v-text-field
-                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="show ? 'text' : 'password'"
-                label="User's Password"
-                v-model="password"
-                class="input-group--focused"
-                @click:append="show = !show"
-              ></v-text-field>
-          </v-row>
-          <v-row no-gutters>
             <v-select
               class="mr-3"
               v-model="userCourse"
@@ -85,8 +75,6 @@ export default {
     descriptionUR: "",
     imageUR:
       "https://edit.org/images/cat/diplomas-certificados-big-2020042416.jpg",
-    password: "",
-    show: false,
     costReward: 0,
     userCourse: "",
     bodyRules: [
