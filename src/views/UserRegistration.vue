@@ -76,14 +76,12 @@ export default {
   methods: {
     goToRegistration: function () {
       this.$router.push({
-        name: "UserCreation",
-        params: { idUser: this.username },
+        name: "UserCreation"
       });
     },
     goToHome: function () {
       this.$router.push({
-        name: "Home",
-        params: { idUser: this.username },
+        name: "Home"
       });
     },
     loginUser() {

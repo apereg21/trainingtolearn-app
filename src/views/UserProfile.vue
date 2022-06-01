@@ -207,6 +207,8 @@ export default {
             this.password!=this.uspassN ? this.uspass=this.uspassN : console.log("User password not changed")
             this.name!=this.nameN ? this.name=this.nameN : console.log("User name not changed")
             this.fullsurname!=this.fullsurnameN ?  this.fullsurname= this.fullsurnameN : console.log("User fullsurname not changed")
+            this.$store.commit("SET_PASSWORD", this.uspass);
+            console.log(this.$store.state.password)
             this.checkbox = false
             this.visibility1 = true;
             this.visibility2 = false;
