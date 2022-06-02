@@ -139,7 +139,7 @@ export default {
             console.log("Server response: " + response.data);
             this.textAlert = response.data;
             if(response.data=="OK - Delivery complete"){
-              this.typeAlert = "warning";
+              this.typeAlert = "success";
               this.alert = true;
               this.goToMenu()
             }else{

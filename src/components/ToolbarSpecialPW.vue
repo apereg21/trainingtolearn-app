@@ -57,6 +57,7 @@ export default {
             if (!response.data.includes("can't")) {
               this.$store.commit("SET_IDUSER", "");
               this.$store.commit("SET_ROLE", "");
+              this.$store.commit("SET_PASSWORD", "");
               console.log("Server response: " + response.data);
               alert("Goodbye Mr/Mrs " + response.data);
               this.goToHome();

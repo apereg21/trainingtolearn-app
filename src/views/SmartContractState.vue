@@ -58,8 +58,8 @@ export default {
         .get("http://localhost:3000/getAllSmartContractsUser/:" + this.$store.state.idUser, { headers })
         .then((response) => {
           console.log("Server response a this petition: " + response.data);
-          if(response.data!= ""){
-            console.log(response.data[0].walletIdDemander)
+          if(response.data!= "User data don't loaded - Reason: No user to load data"){
+            console.log("Hi "+response.data[0].walletIdDemander)
             this.sContracts=response.data
           }else{
             this.textAlert = "No course localized. Return to the home page";

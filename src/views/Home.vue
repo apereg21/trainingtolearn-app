@@ -111,10 +111,12 @@
         </v-card>
       </v-dialog>
     </div>
+    <Footer/>
   </v-app>
 </template>
 
 <script>
+import Footer from "@/components/Footer";
 const axios = require("axios");
 export default {
   name: "Home",
@@ -124,6 +126,9 @@ export default {
     username:""
   }),
   props: {},
+  components: {
+    Footer    
+  },
   computed: {
     isUser() {
       return this.$store.state.idUser;
@@ -183,7 +188,7 @@ export default {
         )
         .then((response) => {
           this.username= response.data
-          this.dialog = false;
+          this.dialog = false
           this.dialog2 = true
           console.log(response);
           this.$store.commit("SET_IDUSER", "");
