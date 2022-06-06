@@ -1,8 +1,10 @@
-<template>
+<template class="html">
   <v-app id="keep" class="white">
     <ToolbarSpecial />
     <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
-    <v-card class="justify-center mx-auto my-5" width="1200" height="600">
+    <v-row align="center">
+      <v-col align="center">
+    <v-card class="justify-center mx-auto my-5" width="1200" height="auto">
       <v-toolbar color="#5B943D">
         <v-toolbar-title> Reward Of UniPoints </v-toolbar-title>
       </v-toolbar>
@@ -62,11 +64,17 @@
         </v-container>
       </v-form>
     </v-card>
+      </v-col>
+    </v-row>
+    <Footer/>
   </v-app>
 </template>
-
+<style scoped>
+  html { overflow-y: auto !important; }
+</style>
 <script>
 import ToolbarSpecial from "@/components/ToolbarSpecial";
+import Footer from "@/components/Footer"
 const axios = require("axios");
 export default {
   name: "TransactionCreation",
@@ -91,6 +99,7 @@ export default {
   props: {},
   components: {
     ToolbarSpecial,
+    Footer
   },
   computed: {
     rewardField: function(){

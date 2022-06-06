@@ -2,71 +2,78 @@
   <v-app id="keep" class="white">
     <ToolbarSpecial />
     <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
-    <v-card class="justify-center mx-auto my-5" width="800" height="525">
-      <v-toolbar color="#5B943D">
-        <v-toolbar-title> Course Form </v-toolbar-title>
-      </v-toolbar>
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-container>
-          <v-row no-gutters>
-            <v-text-field
-              v-model="name"
-              :rules="bodyRules"
-              label="Name Course"
-              required
-              align-center
-            ></v-text-field>
-          </v-row>
-          <v-row no-gutters>
-            <v-text-field
-              v-model="descriptionUR"
-              :rules="bodyRules"
-              label="Description Course"
-              required
-            ></v-text-field>
-          </v-row>
-          <v-row no-gutters>
-            <v-text-field
-              v-model="costReward"
-              type="number"
-              label="Unipoints to complete Course"
-              required
-            ></v-text-field>
-          </v-row>
-          <v-row no-gutters>
-            <v-select
-              class="mr-3"
-              v-model="userCourse"
-              :items="users"
-              :rules="[(v) => !!v || 'User is required']"
-              label="User in Course"
-              required
-            ></v-select>
-          </v-row>
-          <v-row>
-            <v-col align="center" justify="center">
-              <v-btn
-                :disabled="!valid"
-                color="green"
-                class="mr-3"
-                v-on:click="createReward()"
-              >
-                Create Course
-              </v-btn>
+    <v-row align="center">
+      <v-col align="center">
+        <v-card class="justify-center mx-auto my-5" width="800" height="auto">
+          <v-toolbar color="#5B943D">
+            <v-toolbar-title> Course Form </v-toolbar-title>
+          </v-toolbar>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-container>
+              <v-row no-gutters>
+                <v-text-field
+                  v-model="name"
+                  :rules="bodyRules"
+                  label="Name Course"
+                  required
+                  align-center
+                ></v-text-field>
+              </v-row>
+              <v-row no-gutters>
+                <v-text-field
+                  v-model="descriptionUR"
+                  :rules="bodyRules"
+                  label="Description Course"
+                  required
+                ></v-text-field>
+              </v-row>
+              <v-row no-gutters>
+                <v-text-field
+                  v-model="costReward"
+                  type="number"
+                  label="Unipoints to complete Course"
+                  required
+                ></v-text-field>
+              </v-row>
+              <v-row no-gutters>
+                <v-select
+                  class="mr-3"
+                  v-model="userCourse"
+                  :items="users"
+                  :rules="[(v) => !!v || 'User is required']"
+                  label="User in Course"
+                  required
+                ></v-select>
+              </v-row>
+              <v-row>
+                <v-col align="center" justify="center">
+                  <v-btn
+                    :disabled="!valid"
+                    color="green"
+                    class="mr-3"
+                    v-on:click="createReward()"
+                  >
+                    Create Course
+                  </v-btn>
 
-              <v-btn color="#FF9300" class="mr-0" @click="reset">
-                Reset Data
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
-    </v-card>
+                  <v-btn color="#FF9300" class="mr-0" @click="reset">
+                    Reset Data
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <Footer />
   </v-app>
 </template>
 
 <script>
 import ToolbarSpecial from "@/components/ToolbarSpecial";
+import Footer from "@/components/Footer";
 const axios = require("axios");
 export default {
   name: "RewardCreation",
@@ -91,6 +98,7 @@ export default {
   props: {},
   components: {
     ToolbarSpecial,
+    Footer,
   },
   computed: {},
 
@@ -144,7 +152,7 @@ export default {
               this.typeAlert = "success";
               this.alert = true;
               this.goHome();
-            }else{
+            } else {
               this.textAlert = response.data;
               this.typeAlert = "error";
               this.alert = true;
@@ -190,7 +198,7 @@ export default {
     goHome() {
       setTimeout(() => {
         this.$router.push({
-          name: "Home"
+          name: "Home",
         });
       }, 950);
     },

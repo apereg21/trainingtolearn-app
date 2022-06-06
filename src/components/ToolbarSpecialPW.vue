@@ -1,6 +1,5 @@
 <template>
-  <v-card color="white" height="60px">
-    <v-toolbar color="#5B943D">
+    <v-toolbar color="#5B943D" app top dense fixed max-height="50">
       <v-btn
         class="ma-2"
         color="#F7DB5E"
@@ -22,7 +21,6 @@
         Delete Account
       </v-btn>
     </v-toolbar>
-  </v-card>
 </template>
 
 <script>

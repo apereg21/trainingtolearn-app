@@ -1,6 +1,6 @@
 <template>
   <v-app id="keep" class="white">
-    <v-toolbar color="#5B943D">
+    <v-toolbar color="#5B943D" app top dense fixed max-height="50">
       <v-btn
         class="ma-2"
         color="#F7DB5E"
@@ -23,80 +23,93 @@
       </v-btn>
     </v-toolbar>
     <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
-    <v-card class="justify-center mx-auto my-5" width="800" height="725">
-      <v-toolbar color="#5B943D">
-        <v-toolbar-title> My Profile </v-toolbar-title>
-      </v-toolbar>
-      <v-container fuild v-if="visibility1">
-        <v-text-field v-model="name" label="Name" disabled outlined readonly>
-        </v-text-field>
-        <v-text-field
-          v-model="fullsurname"
-          label="Full Surname"
-          disabled
-          outlined
-          readonly
-        >
-        </v-text-field>
-        <v-text-field
-          v-model="usname"
-          label="Username"
-          disabled
-          outlined
-          readonly
-        >
-        </v-text-field>
-        <v-text-field
-          v-model="uspass"
-          label="Password"
-          disabled
-          outlined
-          readonly
-        >
-        </v-text-field>
-        <v-text-field
-          v-model="typeuser"
-          label="Type of User"
-          disabled
-          outlined
-          readonly
-        >
-        </v-text-field>
-      </v-container>
-      <v-container fuild v-if="visibility2">
-        <v-text-field v-model="nameN" label="New Name"> </v-text-field>
-        <v-text-field v-model="fullsurnameN" label="New Full Surname">
-        </v-text-field>
-        <v-text-field v-model="usnameN" label="New UserName"> </v-text-field>
-        <v-text-field v-model="uspassN" label="New Password"> </v-text-field>
-        <v-row no-gutters>
-          <v-col align="center" justify="center">
-            <v-btn color="#F7DB5E" v-if="visibility2" v-on:click="changeData()"
-              >Change Data</v-btn
+    <v-row align="center">
+      <v-col align="center">
+        <v-card class="justify-center mx-auto my-5" width="800" height="auto">
+          <v-toolbar color="#5B943D">
+            <v-toolbar-title> My Profile </v-toolbar-title>
+          </v-toolbar>
+          <v-container fuild v-if="visibility1">
+            <v-text-field
+              v-model="name"
+              label="Name"
+              disabled
+              outlined
+              readonly
             >
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-container fuild>
-        <v-row no-gutters justify="center">
-          <v-checkbox
-            v-model="checkbox"
-            label="Do you want to change Data?"
-            v-on:click="activateFields()"
-          />
-        </v-row>
-      </v-container>
-    </v-card>
+            </v-text-field>
+            <v-text-field
+              v-model="fullsurname"
+              label="Full Surname"
+              disabled
+              outlined
+              readonly
+            >
+            </v-text-field>
+            <v-text-field
+              v-model="usname"
+              label="Username"
+              disabled
+              outlined
+              readonly
+            >
+            </v-text-field>
+            <v-text-field
+              v-model="uspass"
+              label="Password"
+              disabled
+              outlined
+              readonly
+            >
+            </v-text-field>
+            <v-text-field
+              v-model="typeuser"
+              label="Type of User"
+              disabled
+              outlined
+              readonly
+            >
+            </v-text-field>
+          </v-container>
+          <v-container fuild v-if="visibility2">
+            <v-text-field v-model="nameN" label="New Name"> </v-text-field>
+            <v-text-field v-model="fullsurnameN" label="New Full Surname">
+            </v-text-field>
+            <v-text-field v-model="usnameN" label="New UserName">
+            </v-text-field>
+            <v-text-field v-model="uspassN" label="New Password">
+            </v-text-field>
+            <v-row no-gutters>
+              <v-col align="center" justify="center">
+                <v-btn
+                  color="#F7DB5E"
+                  v-if="visibility2"
+                  v-on:click="changeData()"
+                  >Change Data</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-container>
+          <v-container fuild>
+            <v-row no-gutters justify="center">
+              <v-checkbox
+                v-model="checkbox"
+                label="Do you want to change Data?"
+                v-on:click="activateFields()"
+              />
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-col>
+    </v-row>
     <div class="text-center">
       <v-dialog v-model="dialog" max-width="350">
         <v-card>
           <v-card-title class="text-h5">
-            Are you sure oto delete your account Mr/Mrs {{usname}}?
+            Are you sure of delete your account Mr/Mrs {{ usname }}?
           </v-card-title>
 
-          <v-card-text>
-            Select one of the options below
-          </v-card-text>
+          <v-card-text> Select one of the options below </v-card-text>
 
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -121,29 +134,30 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-       <v-dialog v-model="dialog2" max-width="500">
+      <v-dialog v-model="dialog2" max-width="500">
         <v-card>
           <v-card-title class="text-h5">
             Delete account from the platform
           </v-card-title>
           <v-card-text>
-            Okay Mr/Mrs {{username}}, you account is deleted!
-            Exiting from the platform
+            Okay Mr/Mrs {{ username }}, you account is deleted! Exiting from the
+            platform
           </v-card-text>
-
         </v-card>
       </v-dialog>
     </div>
+    <Footer />
   </v-app>
 </template>
 
 <script>
 const axios = require("axios");
+import Footer from "@/components/Footer";
 export default {
   name: "UserProfile",
   data: () => ({
-    dialog:false,
-    dialog2:false,
+    dialog: false,
+    dialog2: false,
     alert: false,
     typeAlert: "",
     textAlert: "",
@@ -170,6 +184,7 @@ export default {
   props: {},
 
   components: {
+    Footer,
   },
   computed: {
     idUser() {
@@ -189,44 +204,43 @@ export default {
       if (opc == true) {
         setTimeout(() => {
           this.theDeleteFuntion();
-              setTimeout(() => {
-              this.dialog2 = false
-            }, 1500);
+          setTimeout(() => {
+            this.dialog2 = false;
+          }, 1500);
         }, 250);
       }
     },
     deleteAccount: function () {
       this.dialog = true;
     },
-    
+
     theDeleteFuntion: function () {
-        const headers = {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        };
-        const idToNumber = parseInt(this.$store.state.idUser);
-        const postData = {
-          id: idToNumber,
-        };
-        axios
-          .post("http://localhost:3000/deleteUser", postData, { headers })
-          .then((response) => {
-            if (!response.data.includes("can't")) {
-              
-              this.dialog2 = true
-              this.$store.commit("SET_IDUSER", "");
-              this.$store.commit("SET_ROLE", "");
-              this.$store.commit("SET_PASSWORD", "");
-              console.log("Server response: " + response.data);
-              this.goHome();
-            } else {
-              alert(response.data);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            alert(error);
-          });
+      const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      };
+      const idToNumber = parseInt(this.$store.state.idUser);
+      const postData = {
+        id: idToNumber,
+      };
+      axios
+        .post("http://localhost:3000/deleteUser", postData, { headers })
+        .then((response) => {
+          if (!response.data.includes("can't")) {
+            this.dialog2 = true;
+            this.$store.commit("SET_IDUSER", "");
+            this.$store.commit("SET_ROLE", "");
+            this.$store.commit("SET_PASSWORD", "");
+            console.log("Server response: " + response.data);
+            this.goHome();
+          } else {
+            alert(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(error);
+        });
     },
     activateFields() {
       if (this.checkbox == true) {
@@ -294,9 +308,10 @@ export default {
         }
       }
 
-      console.log(postData.changes);
+      console.log(postData.changes + " " + postData.changes.length);
 
       if (postData.changes.length != 0) {
+        console.log("I'm here");
         const headers = {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -305,6 +320,7 @@ export default {
         axios
           .post("http://localhost:3000/changeUserData", postData, { headers })
           .then((response) => {
+            this.alert = false;
             console.log("Server response: " + response.data);
             this.textAlert = response.data;
             if (response.data == "User data changed") {
@@ -324,14 +340,15 @@ export default {
               console.log(this.$store.state.password);
               this.typeAlert = "success";
               this.alert = true;
-              this.sleep(950)
+              this.sleep(950);
               this.checkbox = false;
               this.visibility1 = true;
               this.visibility2 = false;
             } else {
               this.typeAlert = "error";
               this.alert = true;
-              this.sleep(950)
+              this.checkbox = false;
+              this.sleep(950);
             }
           })
           .catch((error) => {
@@ -341,8 +358,9 @@ export default {
       } else {
         this.textAlert = "Nothing changed";
         this.typeAlert = "info";
+        this.checkbox = false;
         this.alert = true;
-        this.sleep(950)
+        this.sleep(950);
       }
     },
     findData() {
@@ -380,8 +398,10 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
-          alert(error);
+          this.textAlert = error;
+          this.typeAlert = "error";
+          this.alert = true;
+          this.goHome();
         });
     },
     goHome() {
@@ -393,9 +413,11 @@ export default {
     },
     sleep(seconds) {
       setTimeout(() => {
-          this.alert = false;
-        }, seconds);
-    }
+        this.alert = false;
+
+        this.activateFields();
+      }, seconds);
+    },
   },
 };
 </script>
