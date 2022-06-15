@@ -308,10 +308,8 @@ export default {
         }
       }
 
-      console.log(postData.changes + " " + postData.changes.length);
 
       if (postData.changes.length != 0) {
-        console.log("I'm here");
         const headers = {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -323,7 +321,8 @@ export default {
             this.alert = false;
             console.log("Server response: " + response.data);
             this.textAlert = response.data;
-            if (response.data == "User data changed") {
+            if (this.textAlert == "OK - User data changed") {
+              
               this.usName != this.usnameN
                 ? (this.usname = this.usnameN)
                 : console.log("Username not changed");
@@ -337,7 +336,6 @@ export default {
                 ? (this.fullsurname = this.fullsurnameN)
                 : console.log("User fullsurname not changed");
               this.$store.commit("SET_PASSWORD", this.uspass);
-              console.log(this.$store.state.password);
               this.typeAlert = "success";
               this.alert = true;
               this.sleep(950);

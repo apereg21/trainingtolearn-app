@@ -26,7 +26,7 @@
               :rules="[(v) => !!v || 'UniReward is required']"
               label="UniReward linked to this UniPoints"
               align-left
-              v-on:click="getUsersID()"
+              @click="getUsersID()"
             ></v-select>
           </v-row>
           <v-row no-gutters>
