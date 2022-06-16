@@ -32,6 +32,7 @@
                   v-model="costReward"
                   type="number"
                   label="Unipoints to complete Course"
+                  :rules="[v => (v >= 0 && v <= 10000) || 'The limit is in 10000 UniPoints']"
                   required
                 ></v-text-field>
               </v-row>
@@ -148,6 +149,7 @@ export default {
           .then((response) => {
             console.log("Server response: " + response.data);
             if (response.data == "OK - Reward will be created") {
+              this.valid = false,
               this.textAlert = response.data;
               this.typeAlert = "success";
               this.alert = true;
@@ -197,6 +199,7 @@ export default {
     },
     goHome() {
       setTimeout(() => {
+        this.valid = true
         this.$router.push({
           name: "Home",
         });

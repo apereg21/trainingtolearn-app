@@ -40,7 +40,7 @@
           <v-row no-gutters>
             <v-text-field
               v-model="money"
-              :rules="[(v) => !!v || 'UniPoints Field is required']"
+              :rules="[v => (v >= 0 && v <= 10000) || 'The limit is in 10000 UniPoints']"
               label="UniPoints to deliver"
               align-left
             ></v-text-field>
@@ -148,6 +148,7 @@ export default {
             console.log("Server response: " + response.data);
             this.textAlert = response.data;
             if(response.data=="OK - Delivery complete"){
+              this.valid = false
               this.typeAlert = "success";
               this.alert = true;
               this.goToMenu()
@@ -169,6 +170,7 @@ export default {
     },
     goToMenu: function () {
      setTimeout(() => {
+        this.valid = true
         this.$router.push({
           name: "Home"
         });
