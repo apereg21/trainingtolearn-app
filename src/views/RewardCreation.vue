@@ -32,7 +32,7 @@
                   v-model="costReward"
                   type="number"
                   label="Unipoints to complete Course"
-                  :rules="[v => (v >= 0 && v <= 10000) || 'The limit is in 10000 UniPoints']"
+                  :rules="[v => (v >= 0 && v <= 5000) || 'The limit is in 5000 UniPoints']"
                   required
                 ></v-text-field>
               </v-row>

@@ -40,7 +40,7 @@
           <v-row no-gutters>
             <v-text-field
               v-model="money"
-              :rules="[v => (v >= 0 && v <= 10000) || 'The limit is in 10000 UniPoints']"
+              :rules="[v => (v >= 0 && v <= 5000) || 'The limit is in 5000 UniPoints']"
               label="UniPoints to deliver"
               align-left
             ></v-text-field>
