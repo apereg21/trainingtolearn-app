@@ -32,7 +32,7 @@
                   v-model="costReward"
                   type="number"
                   label="Unipoints to complete Course"
-                  :rules="[v => (v >= 0 && v <= 5000) || 'The limit is in 5000 UniPoints']"
+                  :rules="[v => (v >= 0 && v <= 7500) || 'The limit is in 7500 UniPoints']"
                   required
                 ></v-text-field>
               </v-row>
@@ -44,6 +44,7 @@
                   :rules="[(v) => !!v || 'User is required']"
                   label="User in Course"
                   required
+                  v-on:keyup.enter="createReward()"
                 ></v-select>
               </v-row>
               <v-row>
@@ -118,7 +119,6 @@ export default {
           }
         )
         .then((response) => {
-          console.log("The name is: " + response.data);
           this.username = response.data;
         })
         .catch((error) => {
@@ -138,7 +138,6 @@ export default {
           password: this.$store.state.password,
           usernameCourse: this.userCourse,
         };
-        console.log(this.username);
         const headers = {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -178,7 +177,6 @@ export default {
       axios
         .get("http://localhost:3000/getAllUsersList", { headers })
         .then((response) => {
-          console.log("Server response: " + response.data);
           this.users = response.data;
           this.users.splice(parseInt(this.$store.state.idUser) - 1, 1);
           this.users.splice(0, 1);

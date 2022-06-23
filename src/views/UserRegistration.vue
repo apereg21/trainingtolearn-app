@@ -16,6 +16,7 @@
                   :rules="bodyRules"
                   label="Username"
                   required
+                  @keyup.enter="loginUser()"
                 ></v-text-field>
               </v-row>
               <v-row no-gutters>
@@ -27,6 +28,7 @@
                   class="input-group--focused"
                   required
                   @click:append="show = !show"
+                  @keyup.enter="loginUser()"
                 ></v-text-field>
               </v-row>
               <v-row> </v-row>
@@ -125,7 +127,6 @@ export default {
                 .then((response2) => {
                   var username = this.username;
                   var typUser = response2.data;
-                  console.log(username + this.password + typUser);
                   this.textAlert = "Welcome to the platform Mr/Mrs " + username;
                   this.typeAlert = "success";
                   this.alert = true;

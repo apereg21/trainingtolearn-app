@@ -54,6 +54,7 @@
                   :rules="[(v) => !!v || 'Role is required']"
                   label="Roles"
                   required
+                  @keyup.enter="createAccount()"
                 ></v-select>
               </v-row>
               <v-row> </v-row>

@@ -35,14 +35,16 @@
               :rules="[(v) => !!v || 'UniPoints concept is required']"
               label="Concept of Reward"
               align-left
+              v-on:keyup.enter="createTransaction()"
             ></v-text-field>
           </v-row>
           <v-row no-gutters>
             <v-text-field
               v-model="money"
-              :rules="[v => (v >= 0 && v <= 5000) || 'The limit is in 5000 UniPoints']"
+              :rules="[v => (v >= 0 && v <= 7500) || 'The limit is in 7500 UniPoints']"
               label="UniPoints to deliver"
               align-left
+              v-on:keyup.enter="createTransaction()"
             ></v-text-field>
           </v-row>
           <v-row>
@@ -115,7 +117,6 @@ export default {
       axios
         .get("http://localhost:3000/getUserID/:"+this.addTo, { headers })
         .then((response) => {
-          console.log("Server response: " + response.data);
           this.idUserTo = response.data;
           this.getRewardsDatabase();
         })
@@ -187,7 +188,6 @@ export default {
       axios
         .get("http://localhost:3000/getAllUsersList", { headers })
         .then((response) => {
-          console.log("Server response: " + response.data);
           this.users = response.data;
           this.users.splice(parseInt(this.$store.state.idUser)-1,1)
           this.users.splice(0, 1);
@@ -208,7 +208,6 @@ export default {
       axios
         .get("http://localhost:3000/getAllRewardsList/:"+this.idUserTo+"/:"+false, { headers })
         .then((response) => {
-          console.log("Server response: " + response.data);
           this.unirewards = response.data;
           this.convertData(this.unirewards, 1);
           
@@ -242,7 +241,6 @@ export default {
             headers,
           })
           .then((response) => {
-            console.log("Server response: " + response.data)
             this.addFrom = response.data
           })
           .catch((error) => {

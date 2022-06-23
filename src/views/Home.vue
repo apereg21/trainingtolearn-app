@@ -194,7 +194,6 @@ export default {
           this.username = response.data;
           this.dialog = false;
           this.dialog2 = true;
-          console.log(response);
           this.$store.commit("SET_IDUSER", "");
           this.$store.commit("SET_PASSWORD", "");
           this.$store.commit("SET_ROLE", "");

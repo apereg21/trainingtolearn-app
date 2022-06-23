@@ -72,12 +72,29 @@
             </v-text-field>
           </v-container>
           <v-container fuild v-if="visibility2">
-            <v-text-field v-model="nameN" label="New Name"> </v-text-field>
-            <v-text-field v-model="fullsurnameN" label="New Full Surname">
+            <v-text-field
+              v-model="nameN"
+              label="New Name"
+              v-on:keyup.enter="changeData()"
+            >
             </v-text-field>
-            <v-text-field v-model="usnameN" label="New UserName">
+            <v-text-field
+              v-model="fullsurnameN"
+              label="New Full Surname"
+              v-on:keyup.enter="changeData()"
+            >
             </v-text-field>
-            <v-text-field v-model="uspassN" label="New Password">
+            <v-text-field
+              v-model="usnameN"
+              label="New UserName"
+              v-on:keyup.enter="changeData()"
+            >
+            </v-text-field>
+            <v-text-field
+              v-model="uspassN"
+              label="New Password"
+              v-on:keyup.enter="changeData()"
+            >
             </v-text-field>
             <v-row no-gutters>
               <v-col align="center" justify="center">
@@ -273,7 +290,6 @@ export default {
           value != null &&
           (value != "changes" || value != "username" || value != "password")
         ) {
-          console.log(key);
           switch (key) {
             case "usernameN":
               if (postData[key] != this.usname) {
@@ -308,7 +324,6 @@ export default {
         }
       }
 
-
       if (postData.changes.length != 0) {
         const headers = {
           "Content-Type": "application/json",
@@ -322,20 +337,15 @@ export default {
             console.log("Server response: " + response.data);
             this.textAlert = response.data;
             if (this.textAlert == "OK - User data changed") {
-              
               this.usName != this.usnameN
                 ? (this.usname = this.usnameN)
-                : console.log("Username not changed");
-              this.password != this.uspassN
+                : this.password != this.uspassN
                 ? (this.uspass = this.uspassN)
-                : console.log("User password not changed");
-              this.name != this.nameN
+                : this.name != this.nameN
                 ? (this.name = this.nameN)
-                : console.log("User name not changed");
-              this.fullsurname != this.fullsurnameN
+                : this.fullsurname != this.fullsurnameN
                 ? (this.fullsurname = this.fullsurnameN)
-                : console.log("User fullsurname not changed");
-              this.$store.commit("SET_PASSWORD", this.uspass);
+                : this.$store.commit("SET_PASSWORD", this.uspass);
               this.typeAlert = "success";
               this.alert = true;
               this.sleep(950);
@@ -373,13 +383,11 @@ export default {
           { headers }
         )
         .then((response) => {
-          console.log(response.data);
           this.textAlert = response.data;
           if (
             response.data !=
             "User data don't loaded - Reason: No user to load data"
           ) {
-            console.log("Server response: " + response.data);
             this.name = response.data.name;
             this.uspass = response.data.password;
             this.fullsurname = response.data.fullSurname;

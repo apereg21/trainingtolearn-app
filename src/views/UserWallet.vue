@@ -1,6 +1,27 @@
 <template>
   <v-app id="keep" class="white">
-    <ToolbarSpecialPW />
+    <v-toolbar color="#5B943D" app top dense fixed max-height="50">
+      <v-btn
+        class="ma-2"
+        color="#F7DB5E"
+        justify="end"
+        v-on:click="goToMyProfile()"
+      >
+        <v-icon> mdi-arrow-left </v-icon>
+        Go Back
+      </v-btn>
+      <v-spacer />
+      <v-btn
+        class="ma-2"
+        color="#F7DB5E"
+        align="right"
+        justify="end"
+        v-on:click="deleteAccount()"
+      >
+        <v-icon> mdi-account-off </v-icon>
+        Delete Account
+      </v-btn>
+    </v-toolbar>
     <v-alert :type="typeAlert" v-if="alert" dimissable>{{ textAlert }}</v-alert>
     <v-row align="center">
       <v-col align="center">
@@ -41,6 +62,50 @@
         </v-card>
       </v-col>
     </v-row>
+        <div class="text-center">
+      <v-dialog v-model="dialog" max-width="350">
+        <v-card>
+          <v-card-title class="text-h5">
+            Are you sure of delete your account Mr/Mrs {{ usname }}?
+          </v-card-title>
+
+          <v-card-text> Select one of the options below </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+              color="green darken-1"
+              text
+              @click="dialog = false"
+              v-on:click="click(false)"
+            >
+              Disagree
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              @click="dialog = false"
+              v-on:click="click(true)"
+            >
+              Agree
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="dialog2" max-width="500">
+        <v-card>
+          <v-card-title class="text-h5">
+            Delete account from the platform
+          </v-card-title>
+          <v-card-text>
+            Okay Mr/Mrs {{ username }}, you account is deleted! Exiting from the
+            platform
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </div>
     <Footer />
   </v-app>
 </template>
@@ -50,7 +115,6 @@
 }
 </style>
 <script>
-import ToolbarSpecialPW from "@/components/ToolbarSpecialPW";
 import Footer from "@/components/Footer";
 const axios = require("axios");
 export default {
@@ -79,10 +143,11 @@ export default {
       { text: "From", value: "fromAddress", color: "#5B943D" },
       { text: "To", value: "toAddress", color: "#5B943D" },
     ],
+    dialog: false,
+    dialog2: false,
   }),
   props: {},
   components: {
-    ToolbarSpecialPW,
     Footer,
   },
   computed: {},
@@ -90,12 +155,52 @@ export default {
     this.getUserWalletData();
   },
   methods: {
-    goHome() {
-      setTimeout(() => {
-        this.$router.push({
-          name: "Home",
+    goToMyProfile () {
+      this.$router.push({
+        name: "MyProfile",
+      });
+    },
+    click(opc) {
+      if (opc == true) {
+        setTimeout(() => {
+          this.theDeleteFuntion();
+          setTimeout(() => {
+            this.dialog2 = false;
+          }, 1500);
+        }, 250);
+      }
+    },
+    deleteAccount() {
+      this.dialog = true;
+    },
+
+    theDeleteFuntion(){
+      const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      };
+      const idToNumber = parseInt(this.$store.state.idUser);
+      const postData = {
+        id: idToNumber,
+      };
+      axios
+        .post("http://localhost:3000/deleteUser", postData, { headers })
+        .then((response) => {
+          if (!response.data.includes("can't")) {
+            this.dialog2 = true;
+            this.$store.commit("SET_IDUSER", "");
+            this.$store.commit("SET_ROLE", "");
+            this.$store.commit("SET_PASSWORD", "");
+            console.log("Server response: " + response.data);
+            this.goHome();
+          } else {
+            alert(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(error);
         });
-      }, 950);
     },
     getUserWalletData() {
       const headers = {
@@ -109,7 +214,6 @@ export default {
           { headers }
         )
         .then((response) => {
-          console.log("Server response: " + response.data);
           if (
             response.data !=
             "User data don't loaded - Reason: No user to load data"
@@ -135,6 +239,13 @@ export default {
           this.alert = true;
           this.goHome();
         });
+    },
+    goHome() {
+      setTimeout(() => {
+        this.$router.push({
+          name: "Home",
+        });
+      }, 950);
     },
   },
 };

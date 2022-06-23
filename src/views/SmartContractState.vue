@@ -63,15 +63,7 @@ export default {
           { headers }
         )
         .then((response) => {
-          console.log(
-            "Server response a this petition: " +
-              typeof response.data +
-              "    " +
-              typeof response.data[0] !=
-              "string"
-          );
           if (typeof response.data[0] != "string") {
-            console.log("Hi " + response.data[0].walletIdDemander);
             this.sContracts = response.data;
           } else {
             this.textAlert = "No course/s localized. Return to the home page";
