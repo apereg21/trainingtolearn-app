@@ -178,8 +178,11 @@ export default {
         .get("http://localhost:3000/getAllUsersList", { headers })
         .then((response) => {
           this.users = response.data;
-          this.users.splice(parseInt(this.$store.state.idUser) - 1, 1);
-          this.users.splice(0, 1);
+          for(var i = 0; i < this.users.length; i++) {
+            if(this.users[i].id == this.$store.state.idUser){
+              this.users.splice(i,1)
+            }
+          }
           this.convertData(this.users, 0);
         })
         .catch((error) => {
